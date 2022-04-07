@@ -4,13 +4,22 @@ let cursors;
 const CRAFT_VELOCITY = 150;
 let stars;
 const LASERS_GROUP_SIZE = 40;
-let lasers;
+//let lasers;
 const LEFT_LASER_OFFSET_X = 11;
 const RIGHT_LASER_OFFSET_X = 12;
 const LASERS_OFFSET_Y = 10;
 const LASERS_VELOCITY = 500;
 let fireButton;
 let soundLaser;
+const ENEMIES_GROUP_SIZE = 5;
+let enemies
+let waves = 3;
+let actualWave = 0;
+
+//Random appearences
+const TIMER_RHYTHM=0.1*Phaser.Timer.SECOND;
+let currentUfoProbability;
+let currentUfoVelocity;
 
 let playState = {
     preload: preloadPlay,
@@ -19,11 +28,12 @@ let playState = {
 };
 
 function preloadPlay() {
-
+    game.load.image('stars',
+    'assets/imgs/stars.png');
     game.load.image('craft',
         'assets/imgs/craft.png');
-    game.load.image('stars',
-        'assets/imgs/stars.png');
+    game.load.image('enemies',
+        'assets/imgs/ufo.png');
     game.load.image('laser',
         'assets/imgs/laser.png');
     game.load.audio('sndlaser',
@@ -39,7 +49,73 @@ function createPlay() {
     createKeyControls();
     createLasers(LASERS_GROUP_SIZE);
     createSounds();
+    createEnemies(ENEMIES_GROUP_SIZE);
+    
+    game.physics.startSystem(Phaser.Physics.ARCADE);
 
+    //  This creates a simple sprite that is using our loaded image and displays it on-screen and assign it to a variable
+    image = game.add.sprite(400, 200, 'ufo');
+
+    game.physics.enable(image, Phaser.Physics.ARCADE);
+    /*
+    //  This gets it moving
+    image.body.velocity.setTo(200, 200);
+    */
+    //  This makes the game world bounce-able
+    image.body.collideWorldBounds = true;
+    
+    //  This sets the image bounce energy for the horizontal  and vertical vectors (as an x,y point). "1" is 100% energy return
+    image.body.bounce.set(0.8);
+
+    image.body.gravity.set(0, 180);
+
+}
+
+function createEnemies(number) {
+    enemies = game.add.group();
+    enemies.enableBody = true;
+    enemies.createMultiple(number, 'ufo');
+    currentEnemyProbability = 0.2;
+    currentEnemyVelocity = 50;
+    game.time.events.loop(
+    TIMER_RHYTHM, activateEnemy, this);
+}
+
+function activateEnemy() {
+if (Math.random() <
+currentEnemyProbability) {
+let enemy = enemies.getFirstExists(false);
+if (enemy) {
+let gw = game.world.width;
+let uw = enemy.body.width;
+let w = gw - uw;
+let x = Math.floor(Math.random()*w);
+let z = uw / 2 + x;
+enemy.reset(z, 0);
+enemy.body.velocity.x = 0;
+enemy.body.velocity.y =
+currentEnemyVelocity;
+
+//Physics
+/*
+    //  This creates a simple sprite that is using our loaded image and displays it on-screen and assign it to a variable
+    image = game.add.sprite(400, 200, 'ufo');
+*/
+    game.physics.enable(enemy, Phaser.Physics.ARCADE);
+    /*
+    //  This gets it moving
+    image.body.velocity.setTo(200, 200);
+    */
+    //  This makes the game world bounce-able
+    enemy.body.collideWorldBounds = true;
+    
+    //  This sets the image bounce energy for the horizontal  and vertical vectors (as an x,y point). "1" is 100% energy return
+    enemy.body.bounce.set(0.8);
+
+    enemy.body.gravity.set(0, 180);
+
+}
+}
 }
 
 function createSounds() {
@@ -50,8 +126,34 @@ function updatePlay() {
     manageCraftMovements();
     stars.tilePosition.y += 1;
     manageCraftShots();
+    manageColision();
+    manageCompleteWaves();
 }
 
+function manageColision(){
+    /*game.physics.arcade.overlap(
+        lasers,enemies,laserHitsUfo,null,this);*/
+    game.physics.arcade.overlap(
+        craft,enemies,enemyHitsCraft,null,this);
+
+}
+
+function manageCompleteWaves(){
+    if (actualWave > waves){
+        enemy.kill(); //falta hacer que se generen los enemigos
+        craft.kill();
+        console.log("Colision");
+        game.state.start('win');
+    }
+}
+
+function enemyHitsCraft(craft, enemy) {
+    enemy.kill(); //falta hacer que se generen los enemigos
+    craft.kill();
+    console.log("Colision");
+    game.state.start('gameOver');
+    }
+    
 function manageCraftShots() {
     if (fireButton.justDown ||
         game.input.mousePointer.leftButton.justPressed(30))
@@ -100,6 +202,7 @@ function createCraft() {
     game.physics.arcade.enable(craft);
     craft.body.collideWorldBounds = true;
 }
+
 
 function createKeyControls() {
     cursors =
