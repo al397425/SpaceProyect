@@ -95,6 +95,25 @@ enemy.reset(z, 0);
 enemy.body.velocity.x = 0;
 enemy.body.velocity.y =
 currentEnemyVelocity;
+
+//Physics
+/*
+    //  This creates a simple sprite that is using our loaded image and displays it on-screen and assign it to a variable
+    image = game.add.sprite(400, 200, 'ufo');
+*/
+    game.physics.enable(enemy, Phaser.Physics.ARCADE);
+    /*
+    //  This gets it moving
+    image.body.velocity.setTo(200, 200);
+    */
+    //  This makes the game world bounce-able
+    enemy.body.collideWorldBounds = true;
+    
+    //  This sets the image bounce energy for the horizontal  and vertical vectors (as an x,y point). "1" is 100% energy return
+    enemy.body.bounce.set(0.8);
+
+    enemy.body.gravity.set(0, 180);
+
 }
 }
 }
@@ -115,7 +134,7 @@ function manageColision(){
     /*game.physics.arcade.overlap(
         lasers,enemies,laserHitsUfo,null,this);*/
     game.physics.arcade.overlap(
-        craft,image,enemyHitsCraft,null,this);
+        craft,enemies,enemyHitsCraft,null,this);
 
 }
 
