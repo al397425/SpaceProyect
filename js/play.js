@@ -2,7 +2,7 @@ let craft;
 const HUD_HEIGHT = 50;
 let cursors;
 const CRAFT_VELOCITY = 150;
-let stars;
+
 const LASERS_GROUP_SIZE = 40;
 //let lasers;
 const LEFT_LASER_OFFSET_X = 11;

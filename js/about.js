@@ -1,42 +1,33 @@
 
-let winState = {
-    preload: preloadWin,
-    create: createWin,
-    update: updateWin
+let aboutState = {
+    preload: preloadAbout,
+    create: createAbout,
+    update: updateAbout
 };
 
-function preloadWin() {
+function preloadAbout() {
     game.load.image('startbtn', 'assets/imgs/button_start-screen.png');
     game.load.image('stars',
     'assets/imgs/stars.png');
     
 }
 
-function createWin() {
+function createAbout() {
     let w = game.world.width;
     let h = game.world.height;
     stars = game.add.tileSprite(
         0, 0, w, h, 'stars');
-    let textI = 'win,\n';
-    textI += 'win 2.\n';
-    textI += 'win 3.';
-    textI += '\n\nwin.';
-    let styleI = {
-        font: '20px Arial',
-        fill: '#FFFF00'
-    };
-     instructions = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER-600, textI, styleI);
+        let textI = 'In this game you have to destroy spaceships,\n';
+        textI += 'You have to write the words that appear in the screen\n';
+        textI += 'About About About About About About ';
+        textI += '\n\nGood Luck my friend.';
+        let styleI = {
+            font: '20px Arial',
+            fill: '#FFFF00'
+        };
+         instructions = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER, textI, styleI);
 
-     let textC = ' Accuracy:\n';
-     textC += ' 100 * number of correctly typed characters / number\n';
-     textC += 'of typed characters\n';
-
-    let styleC = {
-        font: '16px Arial',
-        fill: '#FF0000'
-    };
-     credits = game.add.text(TEXT_OFFSET_HOR, game.world.height - TEXT_OFFSET_VER, textC, styleC);
-    credits.anchor.setTo(0, 1);
+     
 
     let posX = game.world.width - SHIP_OFFSET_HOR;
     let posY = game.world.height - SHIP_OFFSET_VER;
@@ -53,7 +44,7 @@ function createWin() {
 
     posY = game.world.centerY;
 }
-function updateWin(){
+function updateAbout(){
     stars.tilePosition.y += 1;
 }
 function startInit() {
