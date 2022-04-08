@@ -2,7 +2,7 @@ let craft;
 const HUD_HEIGHT = 50;
 let cursors;
 const CRAFT_VELOCITY = 150;
-let stars;
+
 const LASERS_GROUP_SIZE = 40;
 //let lasers;
 const LEFT_LASER_OFFSET_X = 11;
@@ -14,7 +14,7 @@ let soundLaser;
 const ENEMIES_GROUP_SIZE = 5;
 let enemies
 let waves = 3;
-let actualWave = 0;
+let actualWave = 1;
 
 //Random appearences
 const TIMER_RHYTHM=0.1*Phaser.Timer.SECOND;
@@ -41,6 +41,8 @@ function preloadPlay() {
 }
 
 function createPlay() {
+    
+    
     let w = game.world.width;
     let h = game.world.height;
     stars = game.add.tileSprite(
@@ -123,6 +125,16 @@ function createSounds() {
 }
 
 function updatePlay() {
+    let textI = 'Score:  \n';
+    textI = 'Time:  \n';
+    textI += 'Wave: ' +actualWave+'\n';
+    textI += '\n';
+    
+    let styleI = {
+        font: '20px Arial',
+        fill: '#FFFF00'
+    };
+    let instructions = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER+150, textI, styleI);
     manageCraftMovements();
     stars.tilePosition.y += 1;
     manageCraftShots();

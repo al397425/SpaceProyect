@@ -5,63 +5,73 @@ const SHIP_OFFSET_VER = 90;
 
 let btnStart;
 let imgUfo;
-
+let btnAbout;
+let stars;
 let initState = {
     preload: preloadInit,
-    create: createInit
+    create: createInit,
+    update: updateInit
 };
 
 function preloadInit() {
-    game.load.image('craft', 'assets/imgs/craft.png');
-    game.load.image('ufo', 'assets/imgs/ufo.png');
+    game.load.image('playbtn', 'assets/imgs/button_play.png');
+    game.load.image('aboutbtn', 'assets/imgs/button_about.png');
+    game.load.image('ufo','assets/imgs/ufo.png');
+    game.load.image('stars',
+    'assets/imgs/stars.png');
 }
 
 function createInit() {
-    let textI = 'Left and right cursors move the shooter,\n';
-    textI += 'and also horizontal movements of the mouse.\n';
-    textI += 'Spacebar and mouse clicks fire the laser cannons.';
-    textI += '\n\nClick on the spacecraft to start.';
+    let w = game.world.width;
+    let h = game.world.height;
+    stars = game.add.tileSprite(
+        0, 0, w, h, 'stars');
+    let textI = 'Space Shooter \n';
+    textI += '\n';
+    textI += 'The amazing game by Susana Puig Alcaraz & Ausias Garcia Torres\n';
+    
     let styleI = {
         font: '20px Arial',
-        fill: '#FFFFFF'
+        fill: '#FFFF00'
     };
     let instructions = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER, textI, styleI);
 
-    let textC = 'Credits:\n';
-    textC += '* Original craft pic created by "Fran" (Desarrollo XNA).\n';
-    textC += '* Original UFO pic created by "0melapics" (Freepik.com).\n';
-    textC += '* Original laser pic from Phaser tutorial "Invaders".\n';
-    textC += '* Blast animation from Phaser tutorial "Invaders".\n';
-    textC += '* Blast sound created by "dklon" (OpenGameArt.Com).\n';
-    textC += '* Laser sound created by "dklon" (OpenGameArt.Com).';
-    let styleC = {
-        font: '16px Arial',
-        fill: '#FF0000'
-    };
-    let credits = game.add.text(TEXT_OFFSET_HOR, game.world.height - TEXT_OFFSET_VER, textC, styleC);
-    credits.anchor.setTo(0, 1);
+    
 
     let posX = game.world.width - SHIP_OFFSET_HOR;
     let posY = game.world.height - SHIP_OFFSET_VER;
-    btnStart = game.add.button(posX, posY, 'craft', startPlay);
+    btnStart = game.add.button(posX-450, posY-50, 'playbtn', startPlay);
     btnStart.anchor.setTo(0.5, 0.5);
-    btnStart.scale.setTo(2.0);
+    btnStart.scale.setTo(1.1);
+
+    let posXAbout = game.world.width - SHIP_OFFSET_HOR;
+    let posYAbout = game.world.height - SHIP_OFFSET_VER;
+    btnAbout = game.add.button(posX-50, posY-50, 'aboutbtn', startAbout);
+    btnAbout.anchor.setTo(0.5, 0.5);
+    btnAbout.scale.setTo(1.5);
     ///////////////////////////
-    btnStart = game.add.button(
+    /*btnStart = game.add.button(
         posX, posY, 'craft', clickStart);
     btnStart.checkWorldBounds = true;
     btnStart.events.onOutOfBounds.add(
         startPlay, this);
-    ///////////////////////////
+    *////////////////////////////
 
     posY = game.world.centerY;
     imgUfo = game.add.image(posX, posY, 'ufo');
     imgUfo.anchor.setTo(0.5, 0.5);
     imgUfo.scale.setTo(2.0);
 }
+function updateInit(){
+    stars.tilePosition.y += 1;
+}
 
 function startPlay() {
     game.state.start('play');
+}
+
+function startAbout() {
+    game.state.start('about');
 }
 
 const FREQUENCY = 1000 / 30;

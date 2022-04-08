@@ -11,6 +11,7 @@ function startGame() {
     game.state.add('play', playState);
     game.state.add('hof', hofState);
     game.state.add('gameOver', gameOverState);
+    game.state.add('about', aboutState);
     game.state.add('win', winState);
     game.state.start('init');
 }

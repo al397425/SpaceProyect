@@ -1,32 +1,35 @@
 
 let gameOverState = {
     preload: preloadgameOver,
-    create: creategameOver
+    create: creategameOver,
+    update: updategameOver
 };
 
 function preloadgameOver() {
-    game.load.image('craft', 'assets/imgs/craft.png');
-    game.load.image('ufo', 'assets/imgs/ufo.png');
+    game.load.image('startbtn', 'assets/imgs/button_start-screen.png');
+    game.load.image('stars',
+    'assets/imgs/stars.png');
 }
 
 function creategameOver() {
+    let w = game.world.width;
+    let h = game.world.height;
+    stars = game.add.tileSprite(
+        0, 0, w, h, 'stars');
     let textI = 'Game Over,\n';
     textI += 'Game Over 2.\n';
     textI += 'Game Over 3.';
     textI += '\n\nGame Over.';
     let styleI = {
         font: '20px Arial',
-        fill: '#FFFFFF'
+        fill: '#FFFF00'
     };
      instructions = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER, textI, styleI);
 
-    let textC = 'Credits:\n';
-    textC += '* Original craft pic created by "Fran" (Desarrollo XNA).\n';
-    textC += '* Original UFO pic created by "0melapics" (Freepik.com).\n';
-    textC += '* Original laser pic from Phaser tutorial "Invaders".\n';
-    textC += '* Blast animation from Phaser tutorial "Invaders".\n';
-    textC += '* Blast sound created by "dklon" (OpenGameArt.Com).\n';
-    textC += '* Laser sound created by "dklon" (OpenGameArt.Com).';
+    let textC = ' Accuracy:\n';
+    textC += ' 100 * number of correctly typed characters / number\n';
+    textC += 'of typed characters\n';
+
     let styleC = {
         font: '16px Arial',
         fill: '#FF0000'
@@ -36,23 +39,22 @@ function creategameOver() {
 
     let posX = game.world.width - SHIP_OFFSET_HOR;
     let posY = game.world.height - SHIP_OFFSET_VER;
-    btnStart = game.add.button(posX, posY, 'craft', startInit);
-    btnStart.anchor.setTo(0.5, 0.5);
+    btnStart = game.add.button(posX-350, posY-200, 'startbtn', startInit);
+    btnStart.anchor.setTo(0.25, 0.25);
     btnStart.scale.setTo(2.0);
     ///////////////////////////
-    btnStart = game.add.button(
+    /*btnStart = game.add.button(
         posX, posY, 'craft', clickStart);
     btnStart.checkWorldBounds = true;
     btnStart.events.onOutOfBounds.add(
         startInit, this);
-    ///////////////////////////
+   */ ///////////////////////////
 
     posY = game.world.centerY;
-    imgUfo = game.add.image(posX, posY, 'ufo');
-    imgUfo.anchor.setTo(0.5, 0.5);
-    imgUfo.scale.setTo(2.0);
 }
-
+function updategameOver(){
+    stars.tilePosition.y += 1;
+}
 function startInit() {
     game.state.start('init');
 }
@@ -66,7 +68,7 @@ function clickStart() {
 }
 
 
-function moveButtonAndImage() {
+/*function moveButtonAndImage() {
     btnStart.y -= DECREASE_Y;
     imgUfo.x -= DECREASE_X;
-}
+}*/
