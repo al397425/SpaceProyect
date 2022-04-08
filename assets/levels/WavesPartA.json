@@ -1,0 +1,81 @@
+{
+  "Wave1": {"enemies": [ {"D": 240, "S": 1}
+],
+"rate": [ {"R": 4}
+],
+"words": [ {"c": "cap"}, {"p": "hats"}, {"d": "mouse"} 
+]
+},
+
+"Wave2": {"enemies": [{"D": 580, "S": 4}
+],
+"rate": [ {"R": 5}
+],
+"words": [ {"c": "bennet"}, {"p": "mona"}, {"d": "Xiao"} 
+]
+},
+
+"Wave3": {"enemies": [{"D": 780, "S": 2}
+],
+"rate": [ {"R": 7}
+],
+"words": [ {"c": "chair"}, {"p": "table"}, {"d": "ball"} 
+]
+},
+
+"Wave4": {"enemies": [{"D": 480, "S": 5}
+],
+"rate": [ {"R": 10}
+],
+"words": [ {"c": "balls"}, {"p": "hats"}, {"d": "tables"} 
+]
+},
+
+"Wave5": {"enemies": [{"D": 380, "S": 6}
+],
+"rate": [ {"R": 9}
+],
+"words": [ {"c": "hats"}, {"p": "chairs"}, {"d": "tables"} 
+]
+},
+
+
+
+
+
+
+  "Wave": [
+    {"x": 0, "y": 350,
+     "enemies": [ {"x": 200, "right": 1}
+     ],
+     "aids": [ {"x": 20}
+     ],
+     "stars": [ {"x": 100}
+     ]
+    },
+    {"x": 420, "y": 500,
+     "enemies": [
+     ],
+     "aids": [ {"x": 600}
+     ],
+     "stars": [ {"x": 770}
+     ]
+    },
+    {"x": 500, "y": 200,
+     "enemies": [ {"x": 550, "right": 1}
+     ],
+     "aids": [ {"x": 800}
+     ],
+     "stars": [ {"x": 650}, {"x": 730}
+     ]
+    },
+    {"x": 800, "y": 650,
+     "enemies": [ {"x": 900, "right": 0}
+     ],
+     "aids": [
+     ],
+     "stars": [ {"x": 1050}
+     ]
+    }
+  ]
+}
