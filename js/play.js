@@ -52,26 +52,24 @@ function createPlay() {
     createLasers(LASERS_GROUP_SIZE);
     createSounds();
     createEnemies(ENEMIES_GROUP_SIZE);
-
-  /* //ESTO CREA LA NAVE INICIAL QUE NO TIENE QUE VER CON LAS DEL CREATE MULTIPLE  
+    
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //  This creates a simple sprite that is using our loaded image and displays it on-screen and assign it to a variable
     image = game.add.sprite(400, 200, 'ufo');
 
     game.physics.enable(image, Phaser.Physics.ARCADE);
-    
+    /*
     //  This gets it moving
-    //image.body.velocity.setTo(200, 200);
-    
+    image.body.velocity.setTo(200, 200);
+    */
     //  This makes the game world bounce-able
     image.body.collideWorldBounds = true;
     
     //  This sets the image bounce energy for the horizontal  and vertical vectors (as an x,y point). "1" is 100% energy return
     image.body.bounce.set(0.8);
 
-    //image.body.gravity.set(0, 180);
-*/
+    image.body.gravity.set(0, 180);
 
 }
 
@@ -79,18 +77,10 @@ function createEnemies(number) {
     enemies = game.add.group();
     enemies.enableBody = true;
     enemies.createMultiple(number, 'ufo');
-    enemies.callAll('events.onOutOfBounds.add','events.onOutOfBounds', resetMember)
-    enemies.callAll('anchor.setTo','anchor',0.5,1.0);
-    enemies.setAll('checkWorldBounds',true);
     currentEnemyProbability = 0.2;
     currentEnemyVelocity = 50;
     game.time.events.loop(
     TIMER_RHYTHM, activateEnemy, this);
-
-    words = game.add.group();
-    words.createMultiple(number,'palabra');
-
-
 }
 
 function activateEnemy() {
@@ -109,51 +99,25 @@ enemy.body.velocity.y =
 currentEnemyVelocity;
 
 //Physics
-
+/*
     //  This creates a simple sprite that is using our loaded image and displays it on-screen and assign it to a variable
-    /*image = game.add.sprite(400, 200, 'ufo');*/
-
+    image = game.add.sprite(400, 200, 'ufo');
+*/
     game.physics.enable(enemy, Phaser.Physics.ARCADE);
-    
+    /*
     //  This gets it moving
-    //image.body.velocity.setTo(200, 200);
-    
+    image.body.velocity.setTo(200, 200);
+    */
     //  This makes the game world bounce-able
     enemy.body.collideWorldBounds = true;
     
     //  This sets the image bounce energy for the horizontal  and vertical vectors (as an x,y point). "1" is 100% energy return
     enemy.body.bounce.set(0.8);
 
-    enemy.body.gravity = false//se puede poner a false para que no caiga
-    let styleI = {
-        font: '20px Arial',
-        fill: '#FFFF00'
-    };
-    texto = game.add.text(enemy.x,enemy.y,"hola", styleI);
-    //texto.x = enemy.body.x;
-
-}
-
+    enemy.body.gravity.set(0, 180);
 
 }
 }
-
-function moveEnemy(){
-
-    enemies.getChildren().forEach(function(enemy){
-        image.body.velocity.y += currentUfoVelocity;
-    }, this);
-    
-
-
-
-}
-function moveText(texto){
-
-
-    texto.y += currentUfoVelocity;
-
-
 }
 
 function createSounds() {
@@ -172,18 +136,6 @@ function updatePlay() {
     };
     let instructions = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER+150, textI, styleI);
     manageCraftMovements();
-
-  /*  for(a in enemies.children){
-        moveEnemy(a);
-    }*/
-
-    /*enemies.getChildren().forEach(function(enemy){
-        moveEnemy(enemy);
-    }, this);*/
-
-//   moveEnemy();
-   
-
     stars.tilePosition.y += 1;
     manageCraftShots();
     manageColision();
