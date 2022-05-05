@@ -88,3 +88,123 @@ function moveButtonAndImage() {
     btnStart.y -= DECREASE_Y;
     imgUfo.x -= DECREASE_X;
 }
+
+
+
+
+
+
+
+
+//
+//funcion para coger eventos de teclado (p4)
+function getKeyboardInput(e){
+    if(e.keyCode>=Phaser.Keyboard.A && e.keyCode<=Phaser.Keyboard.Z){
+        //que mire la letra que has pulsado y si no hay nave activa mire si alguna empieza por esa letra
+        //y la pase a activa, si ya había una activa lo que comprueba es si la siguiente letra a escribir 
+        //y la escrita se corresponden y si lo hacen se mira cuál es la siguiente letra a escribir o se
+        //destruye la nave si se ha escrito la palabra completa
+    }
+
+}
+/*
+//Crea un controlador (debe ir bajo createPlay) que crea un controlador para todas las teclas            
+function createKeyControls(){
+    cursor = game.input.keyboard.createCursorKeys();
+}
+
+
+//al final de createCraft()
+game.physics.arcade.enable(craft);
+
+//Y en el updatePlay() se pone
+manageCraftMovements();
+
+//Hay que usar 
+craft.body.colliderWorldBounds = true;
+
+
+*/ 
+
+//funcion processLetter de p4. Item es lo que en p4 recibió
+//el click (aquí sería la nave destruida)
+function destroyOWP(item, pointer){
+    item.destroy(); //libera memoria
+    //kill() lo quita de la display list pero no del grupo (¿sería mejor usar esto?)
+    //es decir destroy hace que no pueda volver a aparecer pero kill/revive puede hacer que se 
+    //vuelva  a usar
+}
+
+//constantes que se necesitarán 
+
+//Para que se acabe la ola de ataque x naves 
+//habrán sido destruidas 
+const NAVES_NIVEL = 5; //¿se podría ir cambiando esto en cada ola/nivel o para eso mejor que no sea const?
+
+
+//Lo que necesitará el updateGame:
+//moverNaves()
+//Comprobar si has escrito algo
+//Comprobar si hay naves apuntadas / apuntar y escribir hasta que sean destruidas o
+//comprobar colisiones de naves con el jugador / game over
+//comprobar si se ha cumplido condición de victoria
+
+//Si se hace el overState aparte
+//game.state.add('over', overState);
+//let overState = {create:createOver};
+
+//JS object
+//let OWP = {};
+//OWP.speed =;
+//OWP.direction =;
+
+//create timer object
+//timer = game.time.create(false);
+//Set the frequency and the handler ex call spawn() every 1.5s
+//timer.loop(1500, spawn);
+//timer.start();
+
+//function spawn que ya esá arriba comprimida en game.time.events.repeat(1.5*Phaser.....)
+
+//let craft; //Player
+//const HUD_HEIGHT = 50;
+
+//en preloadPlay()
+//game.load.image('craft','assets/img/craft.png');
+
+/*function creater Craft(){
+    let x=game.worl.centerX;
+    let y=game.world.height - HUD_HEIGHT;
+    craft = game.add.sprite(x,y,'craft');
+    craft.anchor.setTo(0.5,0.5);
+
+}
+
+
+
+Crear UFOs (p5)
+Declare a global variable for a new group of sprites
+and a constant for its size:
+const UFOS_GROUP_SIZE = 200;
+let ufos;
+Next, in preloadPlay(), load the UFO image:
+game.load.image('ufo',
+'assets/imgs/ufo.png');
+Then, at the end of createPlay(), invoke the creation function:
+createUfos(UFOS_GROUP_SIZE);
+And, below createPlay(), define this function:
+function createUfos(number) {
+ufos = game.add.group();
+ufos.enableBody = true;
+ufos.createMultiple(number, 'ufo');
+ufos.callAll('events.onOutOfBounds.add',
+'events.onOutOfBounds', resetMember);
+ufos.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
+ufos.setAll('checkWorldBounds', true);
+}
+
+
+
+
+
+*/

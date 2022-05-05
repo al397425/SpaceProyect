@@ -3,7 +3,7 @@
 ],
 "rate": [ {"R": 4}
 ],
-"words": [ {"c": "cap"}, {"p": "hats"}, {"d": "mouse"} 
+"words": [ "cap", "hats", "mouse","hola","adios"
 ]
 },
 
@@ -11,7 +11,7 @@
 ],
 "rate": [ {"R": 5}
 ],
-"words": [ {"c": "bennet"}, {"p": "mona"}, {"d": "Xiao"} 
+"words": [ "bennet","mona", "Xiao" 
 ]
 },
 
