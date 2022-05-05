@@ -13,6 +13,8 @@ let initState = {
     update: updateInit
 };
 
+let WavesToPlay = 0;
+
 function preloadInit() {
     game.load.image('playbtn', 'assets/imgs/button_play.png');
     game.load.image('aboutbtn', 'assets/imgs/button_about.png');
@@ -58,9 +60,9 @@ function createInit() {
     *////////////////////////////
 
     posY = game.world.centerY;
-    imgUfo = game.add.image(posX, posY, 'ufo');
+    /*imgUfo = game.add.image(posX, posY, 'ufo');
     imgUfo.anchor.setTo(0.5, 0.5);
-    imgUfo.scale.setTo(2.0);
+    imgUfo.scale.setTo(2.0);*/
 }
 function updateInit(){
     stars.tilePosition.y += 1;

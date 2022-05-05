@@ -14,7 +14,11 @@ let soundLaser;
 const ENEMIES_GROUP_SIZE = 5;
 let enemies
 let waves = 3;
-let actualWave = 1;
+let actualWave = 0;
+let WaveConfig;
+let actualrate;
+let actualspeed;
+let WavesData = ['assets/levels/WavesPartA.json'];
 
 //Random appearences
 const TIMER_RHYTHM=0.1*Phaser.Timer.SECOND;
@@ -38,10 +42,17 @@ function preloadPlay() {
         'assets/imgs/laser.png');
     game.load.audio('sndlaser',
         'assets/snds/laser.wav');
+        loadWaves(WavesToPlay);
+}
+function loadWaves(Wave) {
+    //game.load.text('Waves', WavesData[Wave -1], true);
+    game.load.text('WavesPartA', ' assets/levels/WavesPartA.json');
+
+   /* console.log(WavesData[0]+ 'aqui');
+    console.log(WavesData[1]+ 'aqui');*/
 }
 
 function createPlay() {
-    
     
     let w = game.world.width;
     let h = game.world.height;
@@ -51,6 +62,16 @@ function createPlay() {
     createKeyControls();
     createLasers(LASERS_GROUP_SIZE);
     createSounds();
+
+    // Get waves data from JSON
+    //WaveConfig = JSON.parse(game.cache.getText('level'));
+    
+    levelData = JSON.parse(game.cache.getText('WavesPartA'));
+
+    /*enemies = game.add.group();
+
+    enemies.enableBody = true;*/
+
     createEnemies(ENEMIES_GROUP_SIZE);
     
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -70,7 +91,8 @@ function createPlay() {
     image.body.bounce.set(0.8);
 
     image.body.gravity.set(0, 180);
-
+    
+    createWaves();
 }
 
 function createEnemies(number) {
@@ -81,6 +103,78 @@ function createEnemies(number) {
     currentEnemyVelocity = 50;
     game.time.events.loop(
     TIMER_RHYTHM, activateEnemy, this);
+}
+
+function createWaves() {
+    console.log(levelData.WavesData); //waves
+    console.log(levelData.WavesData[0]); 
+    console.log(levelData.WavesData[0].rate); //rate
+    console.log(levelData.WavesData[0].speed); //speed
+    console.log(levelData.WavesData[0].words[0]); //palabra 0
+    levelData.WavesData.forEach(createWave, this);
+}
+
+function createWave(element) {
+    
+    //Wave = Wave.create(element.D, element.S, 'WaveConfig');
+
+    for (let i = 0, max = element.WavesData[0].rate.length; i < max; i++)
+        setupRate(element.WavesData[0].rate);
+    
+    for (let i = 0, max = element.WavesData[0].speed.length; i < max; i++)
+        setupSpeed(element.WavesData[0].speed);
+
+    for (let i = 0, max = element.WavesData[0].words.length; i < max; i++)
+        CreateWordList(element.WavesData[0].words[i]);
+        
+}
+function setupRate(rate){
+    actualrate = rate;
+}
+function setupSpeed(speed){
+    actualspeed = speed;
+}
+/*
+function setupEnemy(enemy, plat) {
+    //enemies logic
+    let isRight, limit;
+
+    let theEnemy = game.add.sprite(enemy.x, plat.y - ENEMY_Y_OFFSET, 'enemy');
+    theEnemy.anchor.setTo(0.5, 0.5);
+    if (enemy.right === 0) {
+        theEnemy.scale.x = -1;
+        isRight = false;
+        limit = Math.max(Math.max(0, plat.x) + ENEMY_X_OFFSET, enemy.x - ENEMY_STEP_LIMIT);
+    } else {
+        isRight = true;
+        limit = Math.min(Math.min(plat.x + plat.width, game.world.width) - ENEMY_X_OFFSET,
+            enemy.x + ENEMY_STEP_LIMIT);
+    }
+
+    let flash = game.add.tween(theEnemy).to({
+            alpha: 0.0
+        }, 50, Phaser.Easing.Bounce.Out)
+        .to({
+            alpha: 0.8
+        }, 50, Phaser.Easing.Bounce.Out)
+        .to({
+            alpha: 1.0
+        }, 50, Phaser.Easing.Circular.Out);
+
+    game.physics.arcade.enable(theEnemy);
+    theEnemy.body.immovable = true;
+    theEnemy.body.collideWorldBounds = true;
+    theEnemy.body.setSize(41, 43, 3, 10);
+
+    theEnemy.animations.add('swing', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+    theEnemy.animations.add('run', [8, 9, 10, 11, 12, 13, 14], 10, true);
+
+    let newEnemy = new Enemy(theEnemy, flash, plat, isRight, limit, jumpsToKill);
+    enemies.push(newEnemy);
+}*/
+
+function CreateWordList(words){
+    let Wordlist = new Wordlist(words);
 }
 
 function activateEnemy() {
@@ -236,4 +330,14 @@ function createLasers(number) {
 
 function resetMember(item) {
     item.kill();
+}
+function nextWave() {
+    //clearLevel();
+    WavesToPlay += 1;
+    if (WavesToPlay > WavesData.length)
+        game.state.start('win');
+    else {
+        game.input.enabled = true;
+        game.state.start('play');
+    }
 }
