@@ -12,7 +12,7 @@ const LASERS_VELOCITY = 500;
 let fireButton;
 let soundLaser;
 const ENEMIES_GROUP_SIZE = 5;
-let enemies
+let enemies;
 let waves = 3;
 let actualWave = 0;
 let WaveConfig;
@@ -20,7 +20,13 @@ let actualrate;
 let actualspeed;
 let WavesData = ['assets/levels/WavesPartA.json'];
 let texto;
+let words;
 let image;
+let styleI;
+styleI = {
+    font: '20px Arial',
+    fill: '#FFFF00'
+};
 
 //Random appearences
 const TIMER_RHYTHM=0.1*Phaser.Timer.SECOND;
@@ -70,13 +76,17 @@ function createPlay() {
     
     levelData = JSON.parse(game.cache.getText('WavesPartA'));
 
-    /*enemies = game.add.group();
+    enemies = game.add.group();
 
-    enemies.enableBody = true;*/
+    enemies.enableBody = true;
+
+    words = game.add.group();
 
     createEnemies(ENEMIES_GROUP_SIZE);
     
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+   
+   
+   /* game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //  This creates a simple sprite that is using our loaded image and displays it on-screen and assign it to a variable
     image = game.add.sprite(400, 200, 'ufo');
@@ -96,35 +106,56 @@ function createPlay() {
 
     
 
-    let styleI = {
-        font: '20px Arial',
-        fill: '#FFFF00'
-    };
+
     texto = game.add.text(image.x,image.y,"hola", styleI);
     texto.anchor.set(0.5);
-
+*/
     
     createWaves();
 }
 
 function createEnemies(number) {
-    enemies = game.add.group();
+    console.log("fuck number "+ number);
+    for(var i = 0; i<= number; i++){
+        console.log("bucle for");
+        let enemy = game.add.sprite(100*i, 200, 'ufo');
+        game.physics.enable(enemy, Phaser.Physics.ARCADE);
+        enemy.enableBody = true;
+        enemy.exists = true;
+        enemy.body.bounce.set(0.8);
+        enemy.body.collideWorldBounds = true;
+        enemy.body.velocity.setTo(100*i,200);
+        enemies[i] = enemy;
+
+        let textoTemporal = game.add.text(enemy.x,enemy.y,"hola", styleI);
+        textoTemporal.anchor.set(0.5);
+        words[i] = textoTemporal;
+
+    }
+    
+    
+   /* enemies = game.add.group();
     enemies.enableBody = true;
     enemies.createMultiple(number, 'ufo');
     currentEnemyProbability = 0.2;
     currentEnemyVelocity = 50;
-  /*  game.time.events.loop(
+   game.time.events.loop(
     TIMER_RHYTHM, activateEnemy, this);*/
-
-    words = game.add.group();
-    words.createMultiple(number,'palabra');
+    console.log("fuck u too")
+  /*  words = game.add.group();
+    words.createMultiple(number,'palabra');*/
 }
 function moveText(){
 
-
-    texto.x = Math.floor(image.x);
+    for(var i = 0; i<= ENEMIES_GROUP_SIZE; i++){
+        words[i].x = Math.floor(enemies[i].body.x);
     
-    texto.y = Math.floor(image.y);
+        words[i].y = Math.floor(enemies[i].body.y);
+
+    }
+    /*texto.x = Math.floor(image.x);
+    
+    texto.y = Math.floor(image.y);*/
 
 }
 
@@ -200,7 +231,7 @@ function CreateWordList(words){
     let Wordlist = new Wordlist(words);
 }
 
-/*
+
 function activateEnemy() {
 if (Math.random() <
 currentEnemyProbability) {
@@ -238,7 +269,7 @@ currentEnemyVelocity;
 }
 }
 
-*/
+
 
 function createSounds() {
     soundLaser = game.add.audio('sndlaser');
