@@ -19,6 +19,8 @@ let WaveConfig;
 let actualrate;
 let actualspeed;
 let WavesData = ['assets/levels/WavesPartA.json'];
+let texto;
+let image;
 
 //Random appearences
 const TIMER_RHYTHM=0.1*Phaser.Timer.SECOND;
@@ -80,10 +82,10 @@ function createPlay() {
     image = game.add.sprite(400, 200, 'ufo');
 
     game.physics.enable(image, Phaser.Physics.ARCADE);
-    /*
+    
     //  This gets it moving
     image.body.velocity.setTo(200, 200);
-    */
+    
     //  This makes the game world bounce-able
     image.body.collideWorldBounds = true;
     
@@ -91,6 +93,16 @@ function createPlay() {
     image.body.bounce.set(0.8);
 
     image.body.gravity.set(0, 180);
+
+    
+
+    let styleI = {
+        font: '20px Arial',
+        fill: '#FFFF00'
+    };
+    texto = game.add.text(image.x,image.y,"hola", styleI);
+    texto.anchor.set(0.5);
+
     
     createWaves();
 }
@@ -101,8 +113,19 @@ function createEnemies(number) {
     enemies.createMultiple(number, 'ufo');
     currentEnemyProbability = 0.2;
     currentEnemyVelocity = 50;
-    game.time.events.loop(
-    TIMER_RHYTHM, activateEnemy, this);
+  /*  game.time.events.loop(
+    TIMER_RHYTHM, activateEnemy, this);*/
+
+    words = game.add.group();
+    words.createMultiple(number,'palabra');
+}
+function moveText(){
+
+
+    texto.x = Math.floor(image.x);
+    
+    texto.y = Math.floor(image.y);
+
 }
 
 function createWaves() {
@@ -177,6 +200,7 @@ function CreateWordList(words){
     let Wordlist = new Wordlist(words);
 }
 
+/*
 function activateEnemy() {
 if (Math.random() <
 currentEnemyProbability) {
@@ -193,15 +217,15 @@ enemy.body.velocity.y =
 currentEnemyVelocity;
 
 //Physics
-/*
+
     //  This creates a simple sprite that is using our loaded image and displays it on-screen and assign it to a variable
-    image = game.add.sprite(400, 200, 'ufo');
-*/
+//    image = game.add.sprite(400, 200, 'ufo');
+
     game.physics.enable(enemy, Phaser.Physics.ARCADE);
-    /*
+    
     //  This gets it moving
-    image.body.velocity.setTo(200, 200);
-    */
+    //image.body.velocity.setTo(200, 200);
+    
     //  This makes the game world bounce-able
     enemy.body.collideWorldBounds = true;
     
@@ -213,6 +237,8 @@ currentEnemyVelocity;
 }
 }
 }
+
+*/
 
 function createSounds() {
     soundLaser = game.add.audio('sndlaser');
@@ -230,6 +256,7 @@ function updatePlay() {
     };
     let instructions = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER+150, textI, styleI);
     manageCraftMovements();
+    moveText();
     stars.tilePosition.y += 1;
     manageCraftShots();
     manageColision();
