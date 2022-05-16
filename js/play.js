@@ -55,8 +55,8 @@ let playState = {
 };
 
 function preloadPlay() {
-    //game.load.image('stars',
-    //'assets/imgs/stars.png');
+    game.load.image('stars',
+    'assets/imgs/stars.png');
     game.load.image('craft',
         'assets/imgs/craft.png');
     game.load.image('enemies',
@@ -81,8 +81,8 @@ function createPlay() {
 
     let w = game.world.width;
     let h = game.world.height;
-   /* stars = game.add.tileSprite(
-        0, 0, w, h, 'stars');*/
+    stars = game.add.tileSprite(
+        0, 0, w, h, 'stars');
     createCraft();
     createKeyControls();
     createLasers(LASERS_GROUP_SIZE);
