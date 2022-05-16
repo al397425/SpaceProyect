@@ -1,8 +1,15 @@
 let craft;
+let flag =1;
+let c = 0;
 const HUD_HEIGHT = 50;
 let cursors;
 const CRAFT_VELOCITY = 150;
-
+let w1 = 0;
+let w2 = 0; //arrayposition of chword
+let w4 = 0; //arrayposition of text show in screen (textwords)
+let w3 = 0;
+let textwords = [];
+let rates = [];
 const LASERS_GROUP_SIZE = 40;
 //let lasers;
 const LEFT_LASER_OFFSET_X = 11;
@@ -28,6 +35,14 @@ styleI = {
     fill: '#FFFF00'
 };
 
+let word =[];
+let chword = "nada";
+var correct = [];
+//var bmd=[]
+
+
+let count =0;
+
 //Random appearences
 const TIMER_RHYTHM=0.1*Phaser.Timer.SECOND;
 let currentUfoProbability;
@@ -40,8 +55,8 @@ let playState = {
 };
 
 function preloadPlay() {
-    game.load.image('stars',
-    'assets/imgs/stars.png');
+    //game.load.image('stars',
+    //'assets/imgs/stars.png');
     game.load.image('craft',
         'assets/imgs/craft.png');
     game.load.image('enemies',
@@ -61,15 +76,20 @@ function loadWaves(Wave) {
 }
 
 function createPlay() {
-    
+
+   
+
     let w = game.world.width;
     let h = game.world.height;
-    stars = game.add.tileSprite(
-        0, 0, w, h, 'stars');
+   /* stars = game.add.tileSprite(
+        0, 0, w, h, 'stars');*/
     createCraft();
     createKeyControls();
     createLasers(LASERS_GROUP_SIZE);
     createSounds();
+    createkeyboard();
+    
+
 
     // Get waves data from JSON
     //WaveConfig = JSON.parse(game.cache.getText('level'));
@@ -112,6 +132,116 @@ function createPlay() {
 */
     
     createWaves();
+    game.input.keyboard.addCallbacks(this, null, null, keypressed);
+    /*
+     /////////////////////////
+    //  Here we'll create a simple array where each letter of the word to enter represents one element:
+    for (var i = 0; i < chword; i++)
+    {
+        correct[chword[i]] = false;
+    }
+
+    //  This is our BitmapData onto which we'll draw the word being entered
+    for(var i = 0, x = 0; i < word[i].length ; i++){
+    bmd[i] = game.make.bitmapData(800*i, 200*i);
+    bmd[i].context.font = '64px Arial';
+    bmd[i].context.fillStyle = '#ffffff';
+    bmd[i].context.fillText(word[i][i], 64, 64);
+    bmd[i].addToWorld();
+}
+
+    //  Capture all key presses
+    game.input.keyboard.addCallbacks(this, null, null, keyPress);
+    //////////////////////
+    */
+/*
+      ////////////////////////// WORDS
+
+      wordText = game.add.text(30, 30, "", {fill:'#000000'});
+      wordFoundText = game.add.text(30, 60, "", {fill:'#000000'});
+      //palabraActualText = game.add.text(30, 90, "", {fill:'#000000'});
+      charText = game.add.text(30, 150, "", {fill:'#000000'})
+      charText.fixedToCamera = true;
+  
+      timerTextPalabras = game.add.text(200, 30, "", {fill:'#000000'});
+  
+      scorePalabrasText = game.add.text(300,70, "", {fill:'#000000'});
+  
+      //  Create our Timer
+      timerPalabras = game.time.create(false);
+  
+      //  Set a TimerEvent to occur after 1 second
+      timerPalabras.loop(1000, updateCounter, this);
+  
+      //  Start the timerPalabras running - this is important!
+      //  It won't start automatically, allowing you to hook it to button events and the like.
+      timerPalabras.start();
+  
+  
+      //Minijuego palabras
+      game.input.keyboard.addCallbacks(this, keyPress, null, null); //pillamos input de teclado para llamar a keyPress
+  
+      // Background 
+      rectBGwords = game.add.image(100, 30, 'signTextBg');
+      rectBGwords.alpha = 0.8;
+      rectBGwords.fixedToCamera = true;
+      rectBGwords.width = STAGE_WIDTH - 130;
+      rectBGwords.height = STAGE_HEIGHT - 140;
+      rectBGwords.visible = false;
+  
+      // Initialize first 
+      imagenPalabra = game.add.sprite(0, STAGE_HEIGHT*2, "almond");
+      mostrarImagenPalabra("almond");
+  
+      //Inicializamos la lista de palabras y la palabra actual
+      misPalabras = ["cashew", "almond", "hazelnut", "peanut", "pistachio", "pumpkin seed", "sunflower seed", "walnut"];
+      
+      //false es que aún no ha sido encontrada, true es que ha sido encontrada
+      for (i in misPalabras) misPalabras[i] = [misPalabras[i], false];
+  
+      palabraActual = nuevaPalabra(misPalabras);
+  
+      wordsFound = 0;
+      scorePalabras = 0;
+  
+      wrongSF = game.add.audio('wrong');
+      correctSF = game.add.audio('correct');
+  
+      // HUD
+      foundTxt = game.add.text(150, 80, "found", {
+          fontSize: '10pt',
+          font: font_time
+      });
+      foundTxt.fixedToCamera = true;
+      foundTxt.anchor.setTo(0.5, 0);
+      foundTxt.stroke = '#000000';
+      foundTxt.strokeThickness = 3;
+      foundTxt.fill = '#ffffff';
+      foundTxt.visible = false;
+  
+      timeTxt = game.add.text(STAGE_WIDTH - 70, 85, "time", {
+          fontSize: '10pt',
+          font: font_time
+      });
+      timeTxt.fixedToCamera = true;
+      timeTxt.anchor.setTo(0.5, 0);
+      timeTxt.stroke = '#000000';
+      timeTxt.strokeThickness = 3;
+      timeTxt.fill = '#ffffff';
+      timeTxt.visible = false;
+  
+      scoreTxt = game.add.text(STAGE_WIDTH/2,85, "score", {
+          fontSize: '10pt',
+          font: font_time
+      });
+      scoreTxt.fixedToCamera = true;
+      scoreTxt.anchor.setTo(0.5, 0);
+      scoreTxt.stroke = '#000000';
+      scoreTxt.strokeThickness = 3;
+      scoreTxt.fill = '#ffffff';
+      scoreTxt.visible = false;
+
+      */
 }
 
 function createEnemies(number) {
@@ -165,23 +295,94 @@ function createWaves() {
     console.log(levelData.WavesData[0].rate); //rate
     console.log(levelData.WavesData[0].speed); //speed
     console.log(levelData.WavesData[0].words[0]); //palabra 0
-    levelData.WavesData.forEach(createWave, this);
+   // console.log("lenz"+ levelData.WavesData.length);
+
+    for (let i = 0,c = 0 ,max2, max1 = levelData.WavesData.length; i < max1; i++){
+       // console.log("lenz"+ levelData.WavesData.length);
+
+        for(c = 0, max2 = levelData.WavesData[i].words.length; c < max2; c++){
+         //   console.log("push numero"+ i);
+            word[i] = levelData.WavesData[i].words;
+           // console.log(i+"palabra");
+            console.log(word[i][c]+"linea 245");
+            
+        }
+        if(i > max1){
+            break;
+        }
+    }
+
+    
+    for (let i = 0, max = 4; i <= max; i++){
+        console.log(levelData.WavesData[i].rate+"que tiene rates");
+        rates.push(levelData.WavesData[i].rate);
+        console.log(i+"rate");
+        console.log(rates[i]);
+        if(i = max){
+            break;
+        }
+        }
+    
+    //levelData.WavesData.forEach(createWave, this);
+}
+function managechWord(){
+    if(chword == "nada"){
+        chword = word[w1][w2];
+    }
+
+}
+function managetextwords(){ console.log(rates[3] +'rates');
+
+    if (rates[actualWave] == 2 && actualWave == 0){
+       // console.log("genera texto");
+       
+        for(let i = 0, max = 6;c < max;c=c+2){
+
+            for(let i = 0, max = 2;c < max; c++){
+                // console.log("genera texto"+ i);
+                console.log(word[i][c]+" textword tiene");
+    
+                textwords[c] = (word[i][c]);
+                console.log("push"  +c);
+                //console.log(textwords[i]+"textword tiene");
+                //console.log("deberia pushear en la siguiente " +word[i]);
+                let styletextwords = {
+                    font: '20px Arial',
+                    fill: '#FFFF00'
+                    };
+                let textonave = game.add.text(TEXT_OFFSET_HOR+100*c, TEXT_OFFSET_VER,
+                textwords[c], styletextwords);
+
+            }
+            /*if(flag ==1){
+            setTimeout(() => {  console.log("Jotaro stoped time"); }, 2000);
+            flag =0;
+        }*/
+    }
+    
 }
 
-function createWave(element) {
+}
+/*function createWave(element) {
     
     //Wave = Wave.create(element.D, element.S, 'WaveConfig');
-
+/*
     for (let i = 0, max = element.WavesData[0].rate.length; i < max; i++)
         setupRate(element.WavesData[0].rate);
     
     for (let i = 0, max = element.WavesData[0].speed.length; i < max; i++)
-        setupSpeed(element.WavesData[0].speed);
-
-    for (let i = 0, max = element.WavesData[0].words.length; i < max; i++)
-        CreateWordList(element.WavesData[0].words[i]);
+        setupSpeed(element.WavesData[0].speed);*/
+       /* for (let i = 0, max = levelData.WavesData[i].words.length; i < max; i++)
         
-}
+         word.push(levelData.WavesData[i].words);
+
+    //for (let i = 0, max = element.WavesData[i].words.length; i < max; i++)
+       // CreateWordList(element.WavesData[i].words[i]);
+/*        word = element.WavesData[0].words[0]*/
+//}
+
+/////////////
+
 function setupRate(rate){
     actualrate = rate;
 }
@@ -227,9 +428,10 @@ function setupEnemy(enemy, plat) {
     enemies.push(newEnemy);
 }*/
 
-function CreateWordList(words){
-    let Wordlist = new Wordlist(words);
-}
+/*function CreateWordList(words){
+    //let Wordlist = new Wordlist(words);
+    
+}*/
 
 
 function activateEnemy() {
@@ -276,6 +478,21 @@ function createSounds() {
 }
 
 function updatePlay() {
+    
+    manageUpdateWave();
+    managetextwords();
+    //game.input.onDown.addOnce(removeText, this);
+    
+    //game.input.onDown.addOnce(removeText, this);
+    /*console.log(count);
+    console.log(word.length);*/
+    /*
+    if(word[0][0].length == count){
+        count =0
+        bmd.destroy();
+    }
+    console.log(word);
+    */
     let textI = 'Score:  \n';
     textI = 'Time:  \n';
     textI += 'Wave: ' +actualWave+'\n';
@@ -287,11 +504,22 @@ function updatePlay() {
     };
     let instructions = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER+150, textI, styleI);
     manageCraftMovements();
+
     moveText();
     stars.tilePosition.y += 1;
+
     manageCraftShots();
     manageColision();
     manageCompleteWaves();
+   /* //
+    console.log(wordsFound);
+    palabraActual = nuevaPalabra(misPalabras);
+    scorePalabras = 0;
+    rectBGwords.visible = true;
+    foundTxt.visible = true;
+    timeTxt.visible = true;
+    scoreTxt.visible = true;*/
+    keypressed();
 }
 
 function manageColision(){
@@ -308,9 +536,9 @@ function manageCompleteWaves(){
         craft.kill();
         console.log("Colision");
         game.state.start('win');
+        
     }
 }
-
 function enemyHitsCraft(craft, enemy) {
     enemy.kill(); //falta hacer que se generen los enemigos
     craft.kill();
@@ -323,7 +551,62 @@ function manageCraftShots() {
         game.input.mousePointer.leftButton.justPressed(30))
         fireLasers();
 }
+function createkeyboard(){
+    AButton = game.input.keyboard.addKey(
+        Phaser.Keyboard.A);
+    BButton = game.input.keyboard.addKey(
+        Phaser.Keyboard.B);
+    CButton = game.input.keyboard.addKey(
+        Phaser.Keyboard.C);
+    DButton = game.input.keyboard.addKey(
+        Phaser.Keyboard.D);
+    EButton = game.input.keyboard.addKey(
+        Phaser.Keyboard.E);
+    FButton = game.input.keyboard.addKey(
+        Phaser.Keyboard.F);
+    GButton = game.input.keyboard.addKey(
+        Phaser.Keyboard.G);
+    HButton = game.input.keyboard.addKey(
+         Phaser.Keyboard.H);
+    IButton = game.input.keyboard.addKey(
+        Phaser.Keyboard.I);
+    JButton = game.input.keyboard.addKey(
+        Phaser.Keyboard.J);
+    KButton = game.input.keyboard.addKey(
+        Phaser.Keyboard.K);
+    LButton = game.input.keyboard.addKey(
+        Phaser.Keyboard.L);
+}
+function keypressed(){
+    if (AButton.justDown){
+        let charch = 'a';
+        manageWords(charch);
+        console.log("Pulsado A");
+}
+    if (BButton.justDown)
+        manageWords(b);
+    if (CButton.justDown)
+        manageWords('c');
+    if (DButton.justDown)
+        manageWords(d);
+    if (EButton.justDown)
+        manageWords(e);
+    if (FButton.justDown)
+        manageWords(f);
+    if (GButton.justDown)
+        manageWords(g);
+    if (HButton.justDown)
+        manageWords(h);
+    if (IButton.justDown)
+        manageWords(i);
+    if (JButton.justDown)
+        manageWords(j);
+    if (KButton.justDown)
+        manageWords(k);
+    if (LButton.justDown)
+        manageWords(l);
 
+}
 function fireLasers() {
     let lx = craft.x - LEFT_LASER_OFFSET_X;
     let rx = craft.x + RIGHT_LASER_OFFSET_X;
@@ -331,8 +614,8 @@ function fireLasers() {
     let vy = -LASERS_VELOCITY;
     let laserLeft = shootLaser(lx, y, vy);
     let laserRight = shootLaser(rx, y, vy);
-    if (laserLeft || laserRight)
-        soundLaser.play();
+    //if (laserLeft || laserRight)
+    //    soundLaser.play();
 }
 
 function shootLaser(x, y, vy) {
@@ -354,6 +637,45 @@ function manageCraftMovements() {
         craft.body.velocity.x = CRAFT_VELOCITY;
 }
 
+function manageWords(char){
+    
+    console.log("textword[][] linea 569"+textwords[w3]);
+    console.log(w3);
+    //  Set the x value we'll start drawing the text from
+    var x = 64;
+
+    //  Loop through each letter of the word being entered and check them against the key that was pressed
+    for (var i = 0; i < chword.length; i++)
+    {
+        var letter = chword.charAt(i);
+        //  If they pressed one of the letters in the word, flag it as correct
+        if (char === letter)
+        {
+            correct[letter] = true;
+            count++;
+            console.log("correct destuido");
+            
+            console.log("borrado");
+            
+        }
+
+        //  Now draw the word, letter by letter, changing colour as required
+        if (correct[letter])
+        {
+            game.world.remove(textwords[0].charAt(i));
+            textwords[w3].context.fillStyle = '#00ff00';
+            
+        }
+        else
+        {
+            textwords[w3].context.fillStyle = '#ffffff';
+        }
+        
+        textwords[w3].context.fillText(letter, x, 64);
+
+        x += textwords[w3].context.measureText(letter).width;
+    }
+}
 function startHOF() {
     game.state.start('hof');
 }
@@ -389,13 +711,171 @@ function createLasers(number) {
 function resetMember(item) {
     item.kill();
 }
+function manageUpdateWave(){
+    if(w2 > 3/*word[w1].length*/)
+    nextWave();
+}
+
 function nextWave() {
     //clearLevel();
     WavesToPlay += 1;
+    w1++;
     if (WavesToPlay > WavesData.length)
         game.state.start('win');
     else {
         game.input.enabled = true;
-        game.state.start('play');
+        //game.state.start('play');
     }
 }
+
+    
+
+/*
+function mostrarImagenPalabra(palabra){
+    if(gameState == WORD_GAME){
+        imagenPalabra.destroy();
+        console.log(rectBGwords.x);
+        imagenPalabra = game.add.sprite(rectBGwords.x + rectBGwords.width/2, rectBGwords.y + rectBGwords.height/2, palabra);
+        //imagenPalabra.fixedToCamera = true;
+        imagenPalabra.anchor.setTo(0.5, 0.5);
+        //imagenPalabra.width = 100;
+        //imagenPalabra.height = 100; 
+    }   
+}
+
+function nuevaPalabra(palabras){
+    //pillamos indice entre 0 y el tamaño del array de palabras y devuelve el contenido de ese indice de palabras
+    palabraActual = "";
+
+    //pillamos indice aleatorio entre 0 y el largo del array
+    let randomIndex = getRandomInt(1, palabras.length) - 1
+
+    //console.log("Estoy buscando una palabra.")
+    //buscamos indice cuya palabra asociada no haya sido encontrada
+    while (palabras[randomIndex][1]){
+        randomIndex = getRandomInt(1, palabras.length) - 1
+    }
+
+    mostrarImagenPalabra(palabras[randomIndex][0]);
+
+    //console.log(palabras);
+
+    indicePalabra = randomIndex;
+    //console.log(indicePalabra)
+
+    return palabras[indicePalabra][0];
+}
+
+if (word.length != palabraActual.length && char.keyCode != 13){ //enter no pulsado
+    if (word.length < palabraActual.length && ((char.keyCode >= 65 && char.keyCode <= 90) || char.keyCode == 32)){
+        word += char.key;
+    }
+    else if (word.length >= 0 && char.keyCode == 8) { //backspace
+        word = word.slice(0, word.length-1);
+    }
+}
+else {
+    wordFound = palabraIgual(word, palabraActual)
+    if (wordFound){
+        wordsFound += 1;
+        if(timeRemaining >= TIEMPO_PALABRAS/2){
+
+            //score si la palabra es bien y tiempo es fast
+            scorePalabras += 200;
+        }
+        else if(timeRemaining > 0){
+
+            //score si la palabra es bien y tiempo es slow
+            scorePalabras += 150;
+        }
+        misPalabras[indicePalabra][1] = true;
+        correctSF.play();
+    }
+    //score si la palabra es mal
+    else {
+        wrongSF.play();
+        scorePalabras = Math.max(scorePalabras - 100, 0);
+    }
+    word = "";
+    timeRemaining = TIEMPO_PALABRAS;
+
+    //comprobamos si hemos encontrado todas las palabras
+    if (wordsFound == misPalabras.length) endPalabras(); 
+    else palabraActual = nuevaPalabra(misPalabras);
+}
+
+function endPalabras(){
+    //console.log("El juego ha acabado.")
+    rectBGwords.destroy();
+    imagenPalabra.destroy();
+    scorePalabrasText.destroy();
+    wordFoundText.destroy();
+    wordText.destroy();
+    timerTextPalabras.destroy();
+    foundTxt.destroy();
+    timeTxt.destroy();
+    scoreTxt.destroy();
+
+    game.physics.arcade.enable(fallingNut);
+    game.physics.arcade.enable(fallingSpider);
+    gameState = NUT_CATCHER;
+}
+
+function addSpaces(palabra, palabraCompleta){
+    let palabraEspacios = "";
+    for (i of palabra) palabraEspacios += (i + " ");
+    for (i = 0; i< palabraCompleta.length - palabra.length; i++) palabraEspacios += " _";
+    return palabraEspacios;
+}
+
+function palabraIgual(word1, word2){
+    return (word1 == word2)
+}
+*/
+/*function removeText() {
+
+    text.destroy();
+
+}*/
+/*function updateText() {
+
+
+    text.setText("pipo2");
+
+}*/
+/*
+function keyPress(char) {
+
+    //  Clear the BMD
+    bmd.cls();
+
+    //  Set the x value we'll start drawing the text from
+    var x = 64;
+
+    //  Loop through each letter of the word being entered and check them against the key that was pressed
+    for (var i = 0; i < word.length; i++)
+    {
+        var letter = word.charAt(i);
+        //  If they pressed one of the letters in the word, flag it as correct
+        if (char === letter)
+        {
+            correct[letter] = true;
+            count++;
+        }
+
+        //  Now draw the word, letter by letter, changing colour as required
+        if (correct[letter])
+        {
+            bmd.context.fillStyle = '#00ff00';
+            
+        }
+        else
+        {
+            bmd.context.fillStyle = '#ffffff';
+        }
+        
+        bmd.context.fillText(letter, x, 64);
+
+        x += bmd.context.measureText(letter).width;
+    }
+}*/
