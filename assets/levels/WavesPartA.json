@@ -1,22 +1,22 @@
 {
   "WavesData": [
     {"speed": 4,
-      "rate": 4,
+      "rate": 2,
       "words": [ "cap","hats","mouse","chair", "table", "dog"]
     },
 
     {"speed": 4,
-      "rate": 4,
-      "words": [ "cap","hats","mouse","chair", "table", "dog"]
+      "rate": 3,
+      "words": [ "cap2","hats2","mouse2","chair2", "table2", "dog2"]
     },
 
     {"speed": 4,
       "rate": 4,
-      "words": [ "cap","hats","mouse","chair", "table", "dog"]
+      "words": [ "cap3","hats3","mouse3","chair3", "table3", "dog3"]
     },
     {"speed": 4,
-      "rate": 4,
-      "words": [ "cap","hats","mouse","chair", "table", "dog"]
+      "rate": 6,
+      "words": [ "cap4","hats4","mouse4","chair4", "table4", "dog4"]
     }
   ]
 }
