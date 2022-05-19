@@ -3,22 +3,31 @@
     {"speed": 4,
       "rate": 2,
 
-      "words": [ "cap","hats","mouse","zero", "table", "dog"]
+
+      "words": [ "space","planet","amuse","tile","dark","matter","exile",
+        "chair", "table", "dog","peace","bulb",
+        "ignorant","terrain","magazine","appeal","king",
+        "xeno","year","zone","fruit","orientation",
+        "swarm","worth","alien","review","dark","hover","virus","zero","jail"]
 
     },
 
     {"speed": 4,
       "rate": 3,
-      "words": [ "cap2","hats2","mouse2","chair2", "table2", "dog2"]
+      "words": [ "space","hats2","mouse2",
+                "chair2", "table2",
+                "dog2","youth","zone"]
     },
 
     {"speed": 4,
       "rate": 4,
-      "words": [ "cap3","hats3","mouse3","chair3", "table3", "dog3"]
+      "words": [ "communication","xenomorph",
+                  "mouse3","chair3", "nationalism",
+                   "dog3"]
     },
     {"speed": 4,
       "rate": 6,
-      "words": [ "cap4","hats4","mouse4","chair4", "table4", "dog4"]
+      "words": [ "cap4","whisper","mouse4","candle", "table4", "tycoon"]
     }
   ]
 }
