@@ -34,6 +34,7 @@ let chword = "nada";
 var correct = [];
 //var bmd=[]
 
+let lockedWord = -1; //para que una vez empiezas una palabra no te deje otras 
 
 let count = 0;
 
@@ -612,41 +613,52 @@ function manageCraftMovements() {
 
 function manageWords(char) {
 
-    console.log("textword[][] linea 569" + textwords[w3]);
-    console.log(w3);
-    //  Set the x value we'll start drawing the text from
-    var x = 64;
+
 
     //  Loop through each letter of the word being entered and check them against the key that was pressed
-    for (var i = 0; i < chword.length; i++) {
+    
+    for (var i = 0; i < chword.length; i++) 
+    {
         var letter = chword.charAt(i);
         //  If they pressed one of the letters in the word, flag it as correct
-        if (char == textoTemporal[i].text.substring(0,1)) {
-            count++;
-            console.log(textoTemporal[i].text.substring(0,1)+" substring");
-            textoTemporal[i].text = substring(count,textoTemporal[i].text.length);
-            if(textoTemporal[i].text.length = 0)
+
+        if(lockedWord==i)
+        {
+            if (char == textoTemporal[i].text.substring(0,1)) 
             {
-                console.log("0 letras");
+            
+                console.log("pulsado "+textoTemporal[i].text.substring(0,1));
+                let largo = textoTemporal[i].text.length;
+                textoTemporal[i].text = textoTemporal[i].text.substring(1,largo);
+
+                console.log(textoTemporal[i].text+" substring de count"+count+" a lenght"+largo);
+                if(textoTemporal[i].text.length == 0)
+                {
+                    lockedWord = -1;
+                    enemies[i].kill();
+
+                }
+
             }
-            console.log("correcto");
+        }
+        else if(lockedWord==-1)
+        {
+
+            if (char == textoTemporal[i].text.substring(0,1)) 
+            {
+                lockedWord = i;
+            
+                console.log(textoTemporal[i].text.substring(0,1)+" substring");
+                let largo = textoTemporal[i].text.length;
+                textoTemporal[i].text = textoTemporal[i].text.substring(1,largo);
+
+                console.log(textoTemporal[i].text+" substring de count"+count+" a lenght"+largo);
+            }
         }
 
-        //  Now draw the word, letter by letter, changing colour as required
-        if (correct[letter]) {
-            
-            //textoTemporal[i].context.fillStyle = '#00ff00';
-
-        } else {
-            
-            //textoTemporal[i].context.fillStyle = '#ffffff';
-        }
-
-        //textoTemporal[i].context.fillText(letter, x, 64);
-
-        //x += textoTemporal[i].context.measureText(letter).width;
     }
 }
+
 
 function startHOF() {
     game.state.start('hof');
