@@ -613,10 +613,7 @@ function manageCraftMovements() {
 
 function manageWords(char) {
 
-  //  console.log("textword[][] linea 569" + textwords[w3]);
-    //console.log(w3);
-    //  Set the x value we'll start drawing the text from
-    var x = 64;
+
 
     //  Loop through each letter of the word being entered and check them against the key that was pressed
     
@@ -625,13 +622,12 @@ function manageWords(char) {
         var letter = chword.charAt(i);
         //  If they pressed one of the letters in the word, flag it as correct
 
-        console.log("locked word es num "+lockedWord);
         if(lockedWord==i)
         {
             if (char == textoTemporal[i].text.substring(0,1)) 
             {
             
-                console.log(textoTemporal[i].text.substring(0,1)+" substring");
+                console.log("pulsado "+textoTemporal[i].text.substring(0,1));
                 let largo = textoTemporal[i].text.length;
                 textoTemporal[i].text = textoTemporal[i].text.substring(1,largo);
 
@@ -639,7 +635,6 @@ function manageWords(char) {
                 if(textoTemporal[i].text.length == 0)
                 {
                     lockedWord = -1;
-                    console.log("0 letras, enemies[i]"+enemies[i]);
                     enemies[i].kill();
 
                 }
@@ -648,12 +643,10 @@ function manageWords(char) {
         }
         else if(lockedWord==-1)
         {
-            console.log("else");
 
             if (char == textoTemporal[i].text.substring(0,1)) 
             {
                 lockedWord = i;
-                console.log("nuevo locked word"+lockedWord);
             
                 console.log(textoTemporal[i].text.substring(0,1)+" substring");
                 let largo = textoTemporal[i].text.length;
@@ -662,24 +655,6 @@ function manageWords(char) {
                 console.log(textoTemporal[i].text+" substring de count"+count+" a lenght"+largo);
             }
         }
-    
-
- /*       //  Now draw the word, letter by letter, changing colour as required
-        if (correct[letter])
-        {
-            
-            //textoTemporal[i].context.fillStyle = '#00ff00';
-
-        } 
-        else 
-        {
-            
-            //textoTemporal[i].context.fillStyle = '#ffffff';
-        }
-*/
-        //textoTemporal[i].context.fillText(letter, x, 64);
-
-        //x += textoTemporal[i].context.measureText(letter).width;
 
     }
 }
