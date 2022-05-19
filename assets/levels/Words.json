@@ -1,0 +1,15 @@
+{
+    "palabras": [ {
+                    "longitud": [{"longitud":[]},
+                                ["a", "b", "c", "d"],
+                                ["all", "bob", "cap", 2.3],
+                                ["alia", "babe"]],
+                    "words": [ "cap","hats","mouse","chair", "table", "dog"]
+      }
+    ],
+    "inicial": [ {
+        
+    }
+
+    ]
+  }

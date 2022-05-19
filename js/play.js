@@ -12,7 +12,7 @@ let textwords= [];
 let textoTemporal = [];
 let rates = [];
 let fireButton;
-const ENEMIES_GROUP_SIZE = 1;
+const ENEMIES_GROUP_SIZE = 3;
 let enemies;
 let waves = 3;
 let actualWave = 0;
@@ -154,7 +154,7 @@ function createEnemies(number) {
 
     }*/
 
-    console.log("fuck number " + number);
+    
     for (var i = 0; i <= number; i++) {
         console.log("bucle for");
         let enemy = game.add.sprite(100 * i, 200, 'ufo');
@@ -194,7 +194,6 @@ function createEnemies(number) {
      currentEnemyVelocity = 50;
     game.time.events.loop(
      TIMER_RHYTHM, activateEnemy, this);*/
-    console.log("fuck u too")
     /*  words = game.add.group();
       words.createMultiple(number,'palabra');*/
 
@@ -253,6 +252,11 @@ function createWaves() {
 function managechWord() {
     if (chword == "nada") {
         chword = word[w1][w2];
+    }
+    if(palabradestruida == true){
+        w2++;
+        chword = "nada";
+        palabradestruida = false;
     }
 
 }
@@ -421,9 +425,7 @@ function updatePlay() {
     createEnemies(ENEMIES_GROUP_SIZE);
     flag = false;
     }
-    //game.input.onDown.addOnce(removeText, this);
-
-    //game.input.onDown.addOnce(removeText, this);
+ 
     /*console.log(count);
     console.log(word.length);*/
     /*
@@ -543,61 +545,58 @@ function createkeyboard() {
 }
 
 function keypressed() {
-    if (AButton.justDown) {
-        let charch = 'a';
-        manageWords(charch);
-        console.log("Pulsado A");
-    }
+    if (AButton.justDown)
+        manageWords('a');
     if (BButton.justDown)
-        manageWords(b);
+        manageWords('b');
     if (CButton.justDown)
         manageWords('c');
     if (DButton.justDown)
-        manageWords(d);
+        manageWords('d');
     if (EButton.justDown)
-        manageWords(e);
+        manageWords('e');
     if (FButton.justDown)
-        manageWords(f);
+        manageWords('f');
     if (GButton.justDown)
-        manageWords(g);
+        manageWords('g');
     if (HButton.justDown)
-        manageWords(h);
+        manageWords('h');
     if (IButton.justDown)
-        manageWords(i);
+        manageWords('i');
     if (JButton.justDown)
-        manageWords(j);
+        manageWords('j');
     if (KButton.justDown)
-        manageWords(k);
+        manageWords('k');
     if (LButton.justDown)
-        manageWords(l);
+        manageWords('l');
     if (MButton.justDown)
-        manageWords(m);
+        manageWords('m');
     if (NButton.justDown)
-        manageWords(n);
+        manageWords('n');
     if (OButton.justDown)
-        manageWords(o);
+        manageWords('o');
     if (PButton.justDown)
-        manageWords(p);
+        manageWords('p');
     if (QButton.justDown)
-        manageWords(q);
+        manageWords('q');
     if (RButton.justDown)
-        manageWords(r);
+        manageWords('r');
     if (SButton.justDown)
-        manageWords(s);
+        manageWords('s');
     if (TButton.justDown)
-        manageWords(t);
+        manageWords('t');
     if (UButton.justDown)
-        manageWords(u);
+        manageWords('u');
     if (VButton.justDown)
-        manageWords(v);
+        manageWords('v');
     if (WButton.justDown)
-        manageWords(w);
+        manageWords('w');
     if (XButton.justDown)
-        manageWords(x);
+        manageWords('x');
     if (YButton.justDown)
-        manageWords(y);
+        manageWords('y');
     if (ZButton.justDown)
-        manageWords(z);
+        manageWords('z');
 
 }
 
@@ -622,27 +621,30 @@ function manageWords(char) {
     for (var i = 0; i < chword.length; i++) {
         var letter = chword.charAt(i);
         //  If they pressed one of the letters in the word, flag it as correct
-        if (char === letter) {
-            correct[letter] = true;
+        if (char == textoTemporal[i].text.substring(0,1)) {
             count++;
-            console.log("correct destuido");
-
-            console.log("borrado");
-
+            console.log(textoTemporal[i].text.substring(0,1)+" substring");
+            textoTemporal[i].text = substring(count,textoTemporal[i].text.length);
+            if(textoTemporal[i].text.length = 0)
+            {
+                console.log("0 letras");
+            }
+            console.log("correcto");
         }
 
         //  Now draw the word, letter by letter, changing colour as required
         if (correct[letter]) {
-            game.world.remove(textwords[0].charAt(i));
-            textwords[w3].context.fillStyle = '#00ff00';
+            
+            //textoTemporal[i].context.fillStyle = '#00ff00';
 
         } else {
-            textwords[w3].context.fillStyle = '#ffffff';
+            
+            //textoTemporal[i].context.fillStyle = '#ffffff';
         }
 
-        textwords[w3].context.fillText(letter, x, 64);
+        //textoTemporal[i].context.fillText(letter, x, 64);
 
-        x += textwords[w3].context.measureText(letter).width;
+        //x += textoTemporal[i].context.measureText(letter).width;
     }
 }
 
@@ -671,8 +673,10 @@ function resetMember(item) {
 }
 
 function manageUpdateWave() {
-    if (w2 > 3 /*word[w1].length*/ )
+    if (w2 > 5 /*word[w1].length*/ ){
+        w2=0
         nextWave();
+}
 }
 
 function nextWave() {
