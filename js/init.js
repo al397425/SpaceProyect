@@ -4,6 +4,7 @@ const SHIP_OFFSET_HOR = 150;
 const SHIP_OFFSET_VER = 90;
 
 let btnStart;
+let btnStartB;
 let imgUfo;
 let btnAbout;
 let stars;
@@ -42,27 +43,26 @@ function createInit() {
 
     let posX = game.world.width - SHIP_OFFSET_HOR;
     let posY = game.world.height - SHIP_OFFSET_VER;
+
+    //button Part A
     btnStart = game.add.button(posX-450, posY-50, 'playbtn', startPlay);
     btnStart.anchor.setTo(0.5, 0.5);
     btnStart.scale.setTo(1.1);
+    //button Part B
+    //btnStartB = game.add.button(posX-750, posY-50, 'playbtnB', startPlayB);
+    //btnStartB.anchor.setTo(0.5, 0.5);
+    //btnStartB.scale.setTo(1.1);
+
 
     let posXAbout = game.world.width - SHIP_OFFSET_HOR;
     let posYAbout = game.world.height - SHIP_OFFSET_VER;
     btnAbout = game.add.button(posX-50, posY-50, 'aboutbtn', startAbout);
     btnAbout.anchor.setTo(0.5, 0.5);
     btnAbout.scale.setTo(1.5);
-    ///////////////////////////
-    /*btnStart = game.add.button(
-        posX, posY, 'craft', clickStart);
-    btnStart.checkWorldBounds = true;
-    btnStart.events.onOutOfBounds.add(
-        startPlay, this);
-    *////////////////////////////
+  
 
     posY = game.world.centerY;
-    /*imgUfo = game.add.image(posX, posY, 'ufo');
-    imgUfo.anchor.setTo(0.5, 0.5);
-    imgUfo.scale.setTo(2.0);*/
+
 }
 function updateInit(){
     stars.tilePosition.y += 1;

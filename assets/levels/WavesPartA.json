@@ -3,25 +3,47 @@
     {"speed": 4,
       "rate": 2,
 
+
       "words": [ "communication","hats","mouse",
         "chair", "table", "dog","peace",
         "ignorant","alien","magazine",
         "xxxx","yyyyy","zzzz","ffff"]
 
+
     },
 
     {"speed": 4,
       "rate": 3,
-      "words": [ "cap2","hats2","mouse2","chair2", "table2", "dog2"]
+      "words": [ "space","admire","obedient","variable",
+                  "inspector","division","hypothesize","youth",
+                  "zone","kick","surround","unaware","courtesy",
+                  "biology","qualified","treasurer","variation",
+                  "national","redundancy","freedom","willpower",
+                  "orthodox","quotation","justice","genuine",
+                  "yearn","zeal","professional","motorist",
+                  "literacy","excavate","xukos"
+                ]
     },
 
     {"speed": 4,
       "rate": 4,
-      "words": [ "cap3","hats3","mouse3","chair3", "table3", "dog3"]
+      "words": [ "accompany","example","zenat","banish","withdraw",
+                  "negotiation","responsibility","communication",
+                  "judicial","qualification","fascinate",
+                  "liberty","kitchen","goalkeeper","transform",
+                  "protest","opposition","island","xenoblade",
+                  "syndrome","horseshoe","uncertainty", "nationalism",
+                   "objective","dressing","misplace","zap"]
     },
     {"speed": 4,
       "rate": 6,
-      "words": [ "cap4","hats4","mouse4","chair4", "table4", "dog4"]
+      "words": [ "examination","advantage","mathematics","firefighter",
+                "ghostwriter","overwhelm","whisper","wilderness",
+                "reinforce","hypothesize","joystick", "knowledge",
+                "quotation","nationalism", "tycoon","vegetation",
+                "improvement","salvation","young","discovery",
+                "progressive","communist","underline","observation"
+                ,"landscape","xenomorph","breakdown","zenon"]
     }
   ]
 }
