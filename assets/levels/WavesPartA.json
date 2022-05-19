@@ -5,29 +5,46 @@
 
 
       "words": [ "space","planet","amuse","tile","dark","matter","exile",
-        "chair", "table", "dog","peace","bulb",
-        "ignorant","terrain","magazine","appeal","king",
-        "xeno","year","zone","fruit","orientation",
-        "swarm","worth","alien","review","dark","hover","virus","zero","jail"]
+        "chair", "table", "dog","peace","bulb","long","ignorant",
+        "gentle","terrain","magazine","appeal","king","nation","optimal",
+        "quest","universe","xeno","year","zone","fruit","orientation",
+        "swarm","worth","alien","review","dark","hover","virus",
+        "zero","jail"]
 
     },
 
     {"speed": 4,
       "rate": 3,
-      "words": [ "space","hats2","mouse2",
-                "chair2", "table2",
-                "dog2","youth","zone"]
+      "words": [ "space","admire","obedient","variable",
+                  "inspector","division","hypothesize","youth",
+                  "zone","kick","surround","unaware","courtesy",
+                  "biology","qualified","treasurer","variation",
+                  "national","redundancy","freedom","willpower",
+                  "orthodox","quotation","justice","genuine",
+                  "yearn","zeal","professional","motorist",
+                  "literacy","excavate","xukos"
+                ]
     },
 
     {"speed": 4,
       "rate": 4,
-      "words": [ "communication","xenomorph",
-                  "mouse3","chair3", "nationalism",
-                   "dog3"]
+      "words": [ "accompany","example","zenat","banish","withdraw",
+                  "negotiation","responsibility","communication",
+                  "judicial","qualification","fascinate",
+                  "liberty","kitchen","goalkeeper","transform",
+                  "protest","opposition","island","xenoblade",
+                  "syndrome","horseshoe","uncertainty", "nationalism",
+                   "objective","dressing","misplace","zap"]
     },
     {"speed": 4,
       "rate": 6,
-      "words": [ "cap4","whisper","mouse4","candle", "table4", "tycoon"]
+      "words": [ "examination","advantage","mathematics","firefighter",
+                "ghostwriter","overwhelm","whisper","wilderness",
+                "reinforce","hypothesize","joystick", "knowledge",
+                "quotation","nationalism", "tycoon","vegetation",
+                "improvement","salvation","young","discovery",
+                "progressive","communist","underline","observation"
+                ,"landscape","xenomorph","breakdown","zenon"]
     }
   ]
 }

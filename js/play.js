@@ -119,7 +119,7 @@ function createPlay() {
 function createEnemies(number) {
    
     for (var i = 0; i <= number; i++,random++) {
-        if(random >= 27){
+        if(random >= 37){
         random = 1;
         }
         let enemy = game.add.sprite(100 * i, 200, 'ufo');
@@ -559,10 +559,6 @@ function manageWords(char) {
         }
 
     }
-}
-
-function startHOF() {
-    game.state.start('hof');
 }
 
 function createCraft() {
