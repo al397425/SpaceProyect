@@ -2,7 +2,10 @@
   "WavesData": [
     {"speed": 4,
       "rate": 2,
-      "words": [ "cap","hats","mouse","chair", "table", "dog"]
+      "words": [ "communication","hats","mouse",
+                "chair", "table", "dog","peace",
+                "ignorant","alien","magazine",
+                "xxxx","yyyyy","zzzz"]
     },
 
     {"speed": 4,
