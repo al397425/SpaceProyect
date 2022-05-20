@@ -24,14 +24,14 @@ let WavesData = ['assets/levels/WavesPartA.json'];
 let texto;
 let words;
 let image;
-let textI;
-let styleI = {
+let styleI;
+let random;
+let killcount = 0;
+let treshold =15;
+styleI = {
     font: '20px Arial',
     fill: '#FFFF00'
 };
-let random;
-let killcount = 0;
-let treshold =200;
 
 
 let word = [];
@@ -79,6 +79,7 @@ function loadWaves(Wave) {
 }
 
 function createPlay() {
+    random = Math.floor(Math.random() * 27);
     let w = game.world.width;
     let h = game.world.height;
     stars = game.add.tileSprite(
@@ -116,6 +117,9 @@ function updateCounter(){
 }
 
 function createEnemiesPrueba(i){
+
+    random = Math.floor(Math.random() * 27);
+
     let enemy = game.add.sprite(100 * i, 200, 'ufo');
     game.physics.enable(enemy, Phaser.Physics.ARCADE);
     enemy.enableBody = true;
@@ -128,18 +132,19 @@ function createEnemiesPrueba(i){
     console.log("creado enemies["+i+"] es "+enemies[i]);
 
     console.log(word[w1]+" textword");
-    textwords[i] = (word[w1][i]);
-    
+
+    textwords[i] = (word[w1][random]);
+
     console.log("textword antes de texto temporal "+ textwords[i]);
-    textoTemporal[i] = game.add.text(enemy.x, enemy.y, textwords[i], styleI);
+    textoTemporal[i] = game.add.text(enemy.x+treshold, enemy.y+treshold, textwords[i], styleI);
     //textoTemporal.anchor.set(0.5);
     console.log("texto temporal["+i+"] es "+textoTemporal[i].text);
     console.log("words 0 es "+words[0]);
     words[i] = textoTemporal[i];
     console.log("words["+i+"] es "+words[i].text);
         //}
+    }
 
-}
 
 function createEnemies(number) {
    
@@ -162,7 +167,7 @@ function createEnemies(number) {
                 //console.log(word[i][c] + " textword tiene");
                 console.log(word[w1]+" textword");
                 console.log(random+"random");
-                textwords[i] = (word[w1][random]);
+                textwords[i] = word[w1][random];
                 //console.log(textwords[i]+"textword tiene");
                 //console.log("deberia pushear en la siguiente " +word[i]);
         
@@ -181,11 +186,13 @@ function createEnemies(number) {
 
 function moveText() {
 
+
     
     for (var i = 0; i <= currentEnemiesNum-1; i++) {
         console.log("current enemies "+currentEnemiesNum+" i moveText es "+i+", word es "+words[i].text );
-        words[i].x = Math.floor(enemies[i].body.x);
-        words[i].y = Math.floor(enemies[i].body.y);
+        words[i].x = Math.floor(enemies[i].body.x+treshold);
+        words[i].y = Math.floor(enemies[i].body.y+treshold);
+
     }
 
 }
@@ -355,7 +362,7 @@ function updatePlay() {
     manageUpdateWave();
   
 
-  
+    
     //prueba
      if(flag == true){
         timer.start();
@@ -607,8 +614,13 @@ function manageWords(char) {
         }
         else if(lockedWord==-1)
         {
+<<<<<<< HEAD
             
             if (textoTemporal[i]!=null&& char == textoTemporal[i].text.substring(0,1)) 
+=======
+            console.log(textoTemporal[i]+"lockeword-1");
+            if (char == textoTemporal[i].text.substring(0,1)) 
+>>>>>>> adcc0d7ea6590a606029c22af2c7bda833929d97
             {
                 lockedWord = i;
             
@@ -643,9 +655,10 @@ function resetMember(item) {
 }
 
 function manageUpdateWave() {
-    if (killcount > 4 /*word[w1].length*/ ){
+    if (killcount > 1 /*word[w1].length*/ ){
         killcount=0
         w2=0;
+        console.log("nextwave");
         nextWave();
 }
 }
