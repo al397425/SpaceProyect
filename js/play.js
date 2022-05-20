@@ -26,7 +26,7 @@ let image;
 let styleI;
 let random;
 let killcount = 0;
-let treshold =200;
+let treshold =15;
 styleI = {
     font: '20px Arial',
     fill: '#FFFF00'
@@ -168,8 +168,8 @@ function createEnemies(number) {
 function moveText() {
 
     for (var i = 0; i <= ENEMIES_GROUP_SIZE; i++) {
-        words[i].x = Math.floor(enemies[i].body.x);
-        words[i].y = Math.floor(enemies[i].body.y);
+        words[i].x = Math.floor(enemies[i].body.x+treshold);
+        words[i].y = Math.floor(enemies[i].body.y+treshold);
     }
 
 
