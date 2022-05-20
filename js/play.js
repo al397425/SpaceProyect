@@ -1,5 +1,6 @@
 let craft;
 let flag = true;
+let flag2 = false;
 let c = 0;
 const HUD_HEIGHT = 50;
 let cursors;
@@ -12,7 +13,7 @@ let textwords= [];
 let textoTemporal = [];
 let rates = [];
 let fireButton;
-const ENEMIES_GROUP_SIZE = 3;
+const ENEMIES_GROUP_SIZE = 5;
 let enemies;
 let waves = 3;
 let actualWave = 0;
@@ -36,9 +37,10 @@ let word = [];
 let chword = "nada";
 var correct = [];
 
+let currentEnemiesNum = 0;
 let lockedWord = -1; //para que una vez empiezas una palabra no te deje otras 
+let numeroIter = 0;
 
-let count = 0;
 
 //Random appearences
 const TIMER_RHYTHM = 0.1 * Phaser.Timer.SECOND;
@@ -50,6 +52,9 @@ let playState = {
     create: createPlay,
     update: updatePlay
 };
+
+var timer;
+var totaltime = 2;
 
 function preloadPlay() {
     game.load.image('stars',
@@ -87,9 +92,15 @@ function createPlay() {
 
     words = game.add.group();
 
-    //createEnemies(ENEMIES_GROUP_SIZE);
+    timer = game.time.create(false);
+    timer.loop(1000,updateCounter,this); 
+ 
 
-    /* game.physics.startSystem(Phaser.Physics.ARCADE);
+
+
+   /*  createEnemies(ENEMIES_GROUP_SIZE);
+
+    game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //  This creates a simple sprite that is using our loaded image and displays it on-screen and assign it to a variable
     image = game.add.sprite(400, 200, 'ufo');
@@ -116,6 +127,39 @@ function createPlay() {
     game.input.keyboard.addCallbacks(this, null, null, keypressed);
     
 }
+
+function updateCounter(){
+    totaltime++;
+    console.log("totaltime "+totaltime);
+
+}
+
+function createEnemiesPrueba(i){
+    let enemy = game.add.sprite(100 * i, 200, 'ufo');
+    game.physics.enable(enemy, Phaser.Physics.ARCADE);
+    enemy.enableBody = true;
+    enemy.exists = true;
+    enemy.body.bounce.set(0.8);
+    enemy.body.collideWorldBounds = true;
+    enemy.body.velocity.setTo(100 * i, 200);
+    enemies[i] = enemy;
+
+    console.log("creado enemies["+i+"] es "+enemies[i]);
+
+    console.log(word[w1]+" textword");
+    textwords[i] = (word[w1][i]);
+    
+    console.log("textword antes de texto temporal "+ textwords[i]);
+    textoTemporal[i] = game.add.text(enemy.x, enemy.y, textwords[i], styleI);
+    //textoTemporal.anchor.set(0.5);
+    console.log("texto temporal["+i+"] es "+textoTemporal[i].text);
+    console.log("words 0 es "+words[0]);
+    words[i] = textoTemporal[i];
+    console.log("words["+i+"] es "+words[i].text);
+        //}
+
+}
+
 function createEnemies(number) {
    
     for (var i = 0; i <= number; i++,random++) {
@@ -149,29 +193,20 @@ function createEnemies(number) {
         //console.log(textoTemporal[0]+"texto temporal que")
             //}
     
-}
+    }
     
-
-
-    /* enemies = game.add.group();
-     enemies.enableBody = true;
-     enemies.createMultiple(number, 'ufo');
-     currentEnemyProbability = 0.2;
-     currentEnemyVelocity = 50;
-    game.time.events.loop(
-     TIMER_RHYTHM, activateEnemy, this);*/
-    /*  words = game.add.group();
-      words.createMultiple(number,'palabra');*/
-
+   
 }
 
 function moveText() {
 
-    for (var i = 0; i <= ENEMIES_GROUP_SIZE; i++) {
-        words[i].x = Math.floor(enemies[i].body.x+treshold);
-        words[i].y = Math.floor(enemies[i].body.y+treshold);
-    }
 
+    
+    for (var i = 0; i <= currentEnemiesNum-1; i++) {
+        words[i].x = Math.floor(enemies[i].body.x);
+        words[i].y = Math.floor(enemies[i].body.y);
+
+    }
 
 }
 
@@ -190,9 +225,9 @@ function createWaves() {
         for (c = 0, max2 = levelData.WavesData[i].words.length; c < max2; c++) {
             //   console.log("push numero"+ i);
             word[i] = levelData.WavesData[i].words;
-            console.log("word no deberia estar undefined")
+           // console.log("word no deberia estar undefined")
             // console.log(i+"palabra");
-            console.log(word[i][c] + "linea 245");
+           // console.log(word[i][c] + "linea 245");
 
         }
         if (i > max1) {
@@ -334,7 +369,7 @@ function createSounds() {
 }
 
 function updatePlay() {
-
+    
     manageUpdateWave();
     //Dependiendo de rate deberian de generarse solo x naves hasta que puedan
     //generarse más naves 
@@ -345,12 +380,44 @@ function updatePlay() {
     //      clearTimeout(myTimeout);
     // }
     */
-    if(flag == true){
-    createEnemies(ENEMIES_GROUP_SIZE);
-    flag = false;
-    }
- 
 
+    /*
+    if(flag == true){
+        timer.start();
+        createEnemies(ENEMIES_GROUP_SIZE);
+        flag = false;
+    }*/
+
+  
+    //prueba
+     if(flag == true){
+        timer.start();
+       
+         if(numeroIter<=ENEMIES_GROUP_SIZE){
+           //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
+            if(totaltime>=levelData.WavesData[actualWave].rate){
+                //console.log("totaltime "+totaltime);
+                createEnemiesPrueba(numeroIter);
+                numeroIter++;
+                totaltime = 0
+                currentEnemiesNum++;
+            }
+         
+            
+
+        }
+
+        
+        if(numeroIter>=ENEMIES_GROUP_SIZE){
+            console.log("pause");
+            timer.pause();
+            flag = false;}
+
+    }
+    
+
+
+    
     let textI = 'Score:  \n';
     textI = 'Time:  \n';
     textI += 'Wave: ' + actualWave + '\n';
@@ -365,10 +432,8 @@ function updatePlay() {
 
     moveText();
     stars.tilePosition.y += 1;
-
-    manageColision();
+    manageColision();       
     manageCompleteWaves();
-
     keypressed();
 }
 function manageColision() {
@@ -533,7 +598,7 @@ function manageWords(char) {
                 let largo = textoTemporal[i].text.length;
                 textoTemporal[i].text = textoTemporal[i].text.substring(1,largo);
 
-                console.log(textoTemporal[i].text+" substring de count"+count+" a lenght"+largo);
+                console.log(textoTemporal[i].text+" substring de 1 a lenght"+largo);
                 if(textoTemporal[i].text.length == 0)
                 {
                     lockedWord = -1;
@@ -554,7 +619,7 @@ function manageWords(char) {
                 let largo = textoTemporal[i].text.length;
                 textoTemporal[i].text = textoTemporal[i].text.substring(1,largo);
 
-                console.log(textoTemporal[i].text+" substring de count"+count+" a lenght"+largo);
+                console.log(textoTemporal[i].text+" substring de 1 a lenght"+largo);
             }
         }
 
