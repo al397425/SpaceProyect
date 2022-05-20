@@ -9,7 +9,6 @@ window.onload = startGame;
 function startGame() {
     game.state.add('init', initState);
     game.state.add('play', playState);
-    game.state.add('hof', hofState);
     game.state.add('gameOver', gameOverState);
     game.state.add('about', aboutState);
     game.state.add('win', winState);
