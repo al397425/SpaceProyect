@@ -25,6 +25,9 @@ let texto;
 let words;
 let image;
 let styleI;
+let random;
+let killcount = 0;
+let treshold =200;
 styleI = {
     font: '20px Arial',
     fill: '#FFFF00'
@@ -33,7 +36,6 @@ styleI = {
 let word = [];
 let chword = "nada";
 var correct = [];
-//var bmd=[]
 
 let currentEnemiesNum = 0;
 let lockedWord = -1; //para que una vez empiezas una palabra no te deje otras 
@@ -124,27 +126,6 @@ function createPlay() {
     createWaves();
     game.input.keyboard.addCallbacks(this, null, null, keypressed);
     
-    /*
-     /////////////////////////
-    //  Here we'll create a simple array where each letter of the word to enter represents one element:
-    for (var i = 0; i < chword; i++)
-    {
-        correct[chword[i]] = false;
-    }
-
-    //  This is our BitmapData onto which we'll draw the word being entered
-    for(var i = 0, x = 0; i < word[i].length ; i++){
-    bmd[i] = game.make.bitmapData(800*i, 200*i);
-    bmd[i].context.font = '64px Arial';
-    bmd[i].context.fillStyle = '#ffffff';
-    bmd[i].context.fillText(word[i][i], 64, 64);
-    bmd[i].addToWorld();
-}
-
-    //  Capture all key presses
-    game.input.keyboard.addCallbacks(this, null, null, keyPress);
-*/
-
 }
 
 function updateCounter(){
@@ -180,10 +161,18 @@ function createEnemiesPrueba(i){
 }
 
 function createEnemies(number) {
+<<<<<<< HEAD
 
     
     for (var i = 0; i <= number; i++) {
         console.log("bucle for");
+=======
+   
+    for (var i = 0; i <= number; i++,random++) {
+        if(random >= 37){
+        random = 1;
+        }
+>>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
         let enemy = game.add.sprite(100 * i, 200, 'ufo');
         game.physics.enable(enemy, Phaser.Physics.ARCADE);
         enemy.enableBody = true;
@@ -198,16 +187,17 @@ function createEnemies(number) {
                 // console.log("genera texto"+ i);
                 //console.log(word[i][c] + " textword tiene");
                 console.log(word[w1]+" textword");
-                textwords[i] = (word[w1][i]);
+                console.log(random+"random");
+                textwords[i] = (word[w1][random]);
                 //console.log(textwords[i]+"textword tiene");
                 //console.log("deberia pushear en la siguiente " +word[i]);
         
-        console.log(textwords[i]+" textword antes de texto temporal")
-        textoTemporal[i] = game.add.text(enemy.x, enemy.y, textwords[i], styleI);
+        //console.log(textwords[i]+" textword antes de texto temporal")
+        textoTemporal[i] = game.add.text(enemy.x*treshold, enemy.y*treshold, textwords[i], styleI);
         //textoTemporal.anchor.set(0.5);
-        console.log(words[0]);
+        //console.log(words[0]);
         words[i] = textoTemporal[i];
-        console.log(textoTemporal[0]+"texto temporal que")
+        //console.log(textoTemporal[0]+"texto temporal que")
             //}
     
     }
@@ -222,22 +212,35 @@ function moveText() {
         words[i].x = Math.floor(enemies[i].body.x);
         words[i].y = Math.floor(enemies[i].body.y);
     }
+<<<<<<< HEAD
    
     
 
     /*texto.x = Math.floor(image.x);
     
     texto.y = Math.floor(image.y);*/
+=======
+
+>>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
 
 }
 
 function createWaves() {
+<<<<<<< HEAD
     console.log("CREATE WAVES");
   //  console.log(levelData.WavesData); //waves
    // console.log(levelData.WavesData[0]);
     console.log("rate es "+levelData.WavesData[0].rate); //rate
  //   console.log(levelData.WavesData[0].speed); //speed
  //   console.log(levelData.WavesData[0].words[0]); //palabra 0
+=======
+    random = Math.floor(Math.random() * 27);
+    console.log(levelData.WavesData); //waves
+    console.log(levelData.WavesData[0]);
+    console.log(levelData.WavesData[0].rate); //rate
+    console.log(levelData.WavesData[0].speed); //speed
+    console.log(levelData.WavesData[0].words[0]); //palabra 0
+>>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
     // console.log("lenz"+ levelData.WavesData.length);
 
     for (let i = 0, c = 0, max2, max1 = levelData.WavesData.length; i < max1; i++) {
@@ -271,16 +274,17 @@ function createWaves() {
 }
 
 function managechWord() {
-    if (chword == "nada") {
-        chword = word[w1][w2];
-    }
-    if(palabradestruida == true){
-        w2++;
-        chword = "nada";
-        palabradestruida = false;
-    }
-
-}
+    //   for(let i=0;i < word[w1][i];i++){
+   
+       if (chword == "nada") {
+           chword = word[w1][random];
+       }
+       if(palabradestruida == true){
+           chword = "nada";
+           palabradestruida = false;
+       }
+   //}
+   }
 
 function managetextwords() {
     /*console.log(rates[3] + 'rates');
@@ -342,49 +346,7 @@ function setupRate(rate) {
 function setupSpeed(speed) {
     actualspeed = speed;
 }
-/*
-function setupEnemy(enemy, plat) {
-    //enemies logic
-    let isRight, limit;
 
-    let theEnemy = game.add.sprite(enemy.x, plat.y - ENEMY_Y_OFFSET, 'enemy');
-    theEnemy.anchor.setTo(0.5, 0.5);
-    if (enemy.right === 0) {
-        theEnemy.scale.x = -1;
-        isRight = false;
-        limit = Math.max(Math.max(0, plat.x) + ENEMY_X_OFFSET, enemy.x - ENEMY_STEP_LIMIT);
-    } else {
-        isRight = true;
-        limit = Math.min(Math.min(plat.x + plat.width, game.world.width) - ENEMY_X_OFFSET,
-            enemy.x + ENEMY_STEP_LIMIT);
-    }
-
-    let flash = game.add.tween(theEnemy).to({
-            alpha: 0.0
-        }, 50, Phaser.Easing.Bounce.Out)
-        .to({
-            alpha: 0.8
-        }, 50, Phaser.Easing.Bounce.Out)
-        .to({
-            alpha: 1.0
-        }, 50, Phaser.Easing.Circular.Out);
-
-    game.physics.arcade.enable(theEnemy);
-    theEnemy.body.immovable = true;
-    theEnemy.body.collideWorldBounds = true;
-    theEnemy.body.setSize(41, 43, 3, 10);
-
-    theEnemy.animations.add('swing', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
-    theEnemy.animations.add('run', [8, 9, 10, 11, 12, 13, 14], 10, true);
-
-    let newEnemy = new Enemy(theEnemy, flash, plat, isRight, limit, jumpsToKill);
-    enemies.push(newEnemy);
-}*/
-
-/*function CreateWordList(words){
-    //let Wordlist = new Wordlist(words);
-    
-}*/
 
 
 function activateEnemy() {
@@ -442,6 +404,7 @@ function updatePlay() {
     //      clearTimeout(myTimeout);
     // }
     */
+<<<<<<< HEAD
 
     /*
     if(flag == true){
@@ -480,6 +443,14 @@ function updatePlay() {
 
 
     
+=======
+    if(flag == true){
+    createEnemies(ENEMIES_GROUP_SIZE);
+    flag = false;
+    }
+ 
+
+>>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
     let textI = 'Score:  \n';
     textI = 'Time:  \n';
     textI += 'Wave: ' + actualWave + '\n';
@@ -496,18 +467,20 @@ function updatePlay() {
     stars.tilePosition.y += 1;
     manageColision();       
     manageCompleteWaves();
+<<<<<<< HEAD
     
    
+=======
+
+>>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
     keypressed();
 }
-
 function manageColision() {
 
     game.physics.arcade.overlap(
         craft, enemies, enemyHitsCraft, null, this);
 
 }
-
 function manageCompleteWaves() {
     if (actualWave > waves) {
         enemy.kill(); //falta hacer que se generen los enemigos
@@ -578,10 +551,7 @@ function createkeyboard() {
         Phaser.Keyboard.Y);
     ZButton = game.input.keyboard.addKey(
         Phaser.Keyboard.Z);
-
-
 }
-
 function keypressed() {
     if (AButton.justDown)
         manageWords('a');
@@ -637,7 +607,6 @@ function keypressed() {
         manageWords('z');
 
 }
-
 function manageCraftMovements() {
     craft.body.velocity.x = 0;
     if (cursors.left.isDown ||
@@ -673,7 +642,7 @@ function manageWords(char) {
                 {
                     lockedWord = -1;
                     enemies[i].kill();
-
+                    killcount++;
                 }
 
             }
@@ -694,11 +663,6 @@ function manageWords(char) {
         }
 
     }
-}
-
-
-function startHOF() {
-    game.state.start('hof');
 }
 
 function createCraft() {
@@ -722,8 +686,9 @@ function resetMember(item) {
 }
 
 function manageUpdateWave() {
-    if (w2 > 5 /*word[w1].length*/ ){
-        w2=0
+    if (killcount > 4 /*word[w1].length*/ ){
+        killcount=0
+        w2=0;
         nextWave();
 }
 }
@@ -732,11 +697,16 @@ function nextWave() {
     //clearLevel();
     WavesToPlay += 1;
     w1++;
-    if (WavesToPlay > WavesData.length)
+    if (WavesToPlay > WavesData.length){
+        w1=0;
         game.state.start('win');
+        }
     else {
         game.input.enabled = true;
         //game.state.start('play');
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
