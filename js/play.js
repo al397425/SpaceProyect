@@ -75,6 +75,7 @@ function loadWaves(Wave) {
 }
 
 function createPlay() {
+    random = Math.floor(Math.random() * 27);
     let w = game.world.width;
     let h = game.world.height;
     stars = game.add.tileSprite(
@@ -135,6 +136,15 @@ function updateCounter(){
 }
 
 function createEnemiesPrueba(i){
+<<<<<<< Updated upstream
+=======
+    for (var x = 0; x <= i; x++) {
+        if(random >= 27){
+        random = 1;
+        }
+        random++
+    }
+>>>>>>> Stashed changes
     let enemy = game.add.sprite(100 * i, 200, 'ufo');
     game.physics.enable(enemy, Phaser.Physics.ARCADE);
     enemy.enableBody = true;
@@ -147,7 +157,11 @@ function createEnemiesPrueba(i){
     console.log("creado enemies["+i+"] es "+enemies[i]);
 
     console.log(word[w1]+" textword");
+<<<<<<< Updated upstream
     textwords[i] = (word[w1][i]);
+=======
+    textwords[i] = word[w1][random];
+>>>>>>> Stashed changes
     
     console.log("textword antes de texto temporal "+ textwords[i]);
     textoTemporal[i] = game.add.text(enemy.x, enemy.y, textwords[i], styleI);
@@ -157,8 +171,8 @@ function createEnemiesPrueba(i){
     words[i] = textoTemporal[i];
     console.log("words["+i+"] es "+words[i].text);
         //}
+    }
 
-}
 
 function createEnemies(number) {
    
@@ -181,7 +195,7 @@ function createEnemies(number) {
                 //console.log(word[i][c] + " textword tiene");
                 console.log(word[w1]+" textword");
                 console.log(random+"random");
-                textwords[i] = (word[w1][random]);
+                textwords[i] = word[w1][random];
                 //console.log(textwords[i]+"textword tiene");
                 //console.log("deberia pushear en la siguiente " +word[i]);
         
@@ -388,7 +402,7 @@ function updatePlay() {
         flag = false;
     }*/
 
-  
+    
     //prueba
      if(flag == true){
         timer.start();
@@ -610,7 +624,7 @@ function manageWords(char) {
         }
         else if(lockedWord==-1)
         {
-
+            console.log(textoTemporal[i]+"lockeword-1");
             if (char == textoTemporal[i].text.substring(0,1)) 
             {
                 lockedWord = i;
@@ -647,9 +661,10 @@ function resetMember(item) {
 }
 
 function manageUpdateWave() {
-    if (killcount > 4 /*word[w1].length*/ ){
+    if (killcount > 1 /*word[w1].length*/ ){
         killcount=0
         w2=0;
+        console.log("nextwave");
         nextWave();
 }
 }
