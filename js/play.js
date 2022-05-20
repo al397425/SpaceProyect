@@ -13,7 +13,7 @@ let textwords= [];
 let textoTemporal = [];
 let rates = [];
 let fireButton;
-const ENEMIES_GROUP_SIZE = 3;
+const ENEMIES_GROUP_SIZE = 5;
 let enemies;
 let waves = 3;
 let actualWave = 0;
@@ -161,18 +161,11 @@ function createEnemiesPrueba(i){
 }
 
 function createEnemies(number) {
-<<<<<<< HEAD
-
-    
-    for (var i = 0; i <= number; i++) {
-        console.log("bucle for");
-=======
    
     for (var i = 0; i <= number; i++,random++) {
         if(random >= 37){
         random = 1;
         }
->>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
         let enemy = game.add.sprite(100 * i, 200, 'ufo');
         game.physics.enable(enemy, Phaser.Physics.ARCADE);
         enemy.enableBody = true;
@@ -212,35 +205,16 @@ function moveText() {
         words[i].x = Math.floor(enemies[i].body.x);
         words[i].y = Math.floor(enemies[i].body.y);
     }
-<<<<<<< HEAD
-   
-    
-
-    /*texto.x = Math.floor(image.x);
-    
-    texto.y = Math.floor(image.y);*/
-=======
-
->>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
 
 }
 
 function createWaves() {
-<<<<<<< HEAD
-    console.log("CREATE WAVES");
-  //  console.log(levelData.WavesData); //waves
-   // console.log(levelData.WavesData[0]);
-    console.log("rate es "+levelData.WavesData[0].rate); //rate
- //   console.log(levelData.WavesData[0].speed); //speed
- //   console.log(levelData.WavesData[0].words[0]); //palabra 0
-=======
     random = Math.floor(Math.random() * 27);
     console.log(levelData.WavesData); //waves
     console.log(levelData.WavesData[0]);
     console.log(levelData.WavesData[0].rate); //rate
     console.log(levelData.WavesData[0].speed); //speed
     console.log(levelData.WavesData[0].words[0]); //palabra 0
->>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
     // console.log("lenz"+ levelData.WavesData.length);
 
     for (let i = 0, c = 0, max2, max1 = levelData.WavesData.length; i < max1; i++) {
@@ -404,7 +378,6 @@ function updatePlay() {
     //      clearTimeout(myTimeout);
     // }
     */
-<<<<<<< HEAD
 
     /*
     if(flag == true){
@@ -419,9 +392,9 @@ function updatePlay() {
         timer.start();
        
          if(numeroIter<=ENEMIES_GROUP_SIZE){
-           console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
+           //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
             if(totaltime>=levelData.WavesData[actualWave].rate){
-                console.log("totaltime "+totaltime);
+                //console.log("totaltime "+totaltime);
                 createEnemiesPrueba(numeroIter);
                 numeroIter++;
                 totaltime = 0
@@ -443,14 +416,6 @@ function updatePlay() {
 
 
     
-=======
-    if(flag == true){
-    createEnemies(ENEMIES_GROUP_SIZE);
-    flag = false;
-    }
- 
-
->>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
     let textI = 'Score:  \n';
     textI = 'Time:  \n';
     textI += 'Wave: ' + actualWave + '\n';
@@ -467,12 +432,6 @@ function updatePlay() {
     stars.tilePosition.y += 1;
     manageColision();       
     manageCompleteWaves();
-<<<<<<< HEAD
-    
-   
-=======
-
->>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
     keypressed();
 }
 function manageColision() {
@@ -706,7 +665,3 @@ function nextWave() {
         //game.state.start('play');
     }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> bbc59d502aa9b4e095b486689a4a90368bc91f36
