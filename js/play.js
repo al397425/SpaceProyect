@@ -136,15 +136,14 @@ function updateCounter(){
 }
 
 function createEnemiesPrueba(i){
-<<<<<<< Updated upstream
-=======
+
     for (var x = 0; x <= i; x++) {
         if(random >= 27){
         random = 1;
         }
         random++
     }
->>>>>>> Stashed changes
+
     let enemy = game.add.sprite(100 * i, 200, 'ufo');
     game.physics.enable(enemy, Phaser.Physics.ARCADE);
     enemy.enableBody = true;
@@ -157,12 +156,8 @@ function createEnemiesPrueba(i){
     console.log("creado enemies["+i+"] es "+enemies[i]);
 
     console.log(word[w1]+" textword");
-<<<<<<< Updated upstream
-    textwords[i] = (word[w1][i]);
-=======
     textwords[i] = word[w1][random];
->>>>>>> Stashed changes
-    
+
     console.log("textword antes de texto temporal "+ textwords[i]);
     textoTemporal[i] = game.add.text(enemy.x, enemy.y, textwords[i], styleI);
     //textoTemporal.anchor.set(0.5);
