@@ -19,7 +19,6 @@ function createAbout() {
         0, 0, w, h, 'stars');
         let textI = 'In this game you have to destroy spaceships,\n';
         textI += 'You have to write the words that appear in the screen\n';
-        textI += 'About About About About About About ';
         textI += '\n\nGood Luck my friend.';
         let styleI = {
             font: '20px Arial',

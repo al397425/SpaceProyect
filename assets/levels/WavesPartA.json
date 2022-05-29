@@ -1,20 +1,20 @@
 {
   "WavesData": [
-    {"speed": 4,
+    {"speed": 55,
       "rate": 3,
 
 
       "words": [ "space","planet","amuse","tile","dark","matter","exile",
         "chair", "table", "dog","peace","bulb","long","ignorant",
-        "gentle","terrain","magazine","appeal","king","nation","optimal",
-        "quest","universe","xeno","year","zone","fruit","orientation",
+        "gentle","terrain","maga","appeal","king","nation","optimal",
+        "quest","uned","xeno","year","zone","fruit","order",
         "swarm","worth","alien","review","dark","hover","virus",
         "zero","jail"]
 
 
     },
 
-    {"speed": 4,
+    {"speed": 75,
       "rate": 2,
       "words": [ "space","admire","obedient","variable",
                   "inspector","division","hypothesize","youth",
@@ -27,17 +27,17 @@
                 ]
     },
 
-    {"speed": 4,
+    {"speed": 100,
       "rate": 1,
       "words": [ "accompany","example","zenat","banish","withdraw",
                   "negotiation","responsibility","communication",
                   "judicial","qualification","fascinate",
                   "liberty","kitchen","goalkeeper","transform",
-                  "protest","opposition","island","xenoblade",
+                  "orientation","opposition","island","xenoblade",
                   "syndrome","horseshoe","uncertainty", "nationalism",
                    "objective","dressing","misplace","zap"]
     },
-    {"speed": 4,
+    {"speed": 125,
       "rate": 1,
       "words": [ "examination","advantage","mathematics","firefighter",
                 "ghostwriter","overwhelm","whisper","wilderness",
@@ -47,6 +47,7 @@
                 "progressive","communist","underline","observation"
                 ,"landscape","xenomorph","breakdown","zenon"]
     }
+    
     
   ]
 }
