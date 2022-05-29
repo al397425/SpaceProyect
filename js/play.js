@@ -28,6 +28,7 @@ let styleI;
 let random;
 let killcount = 0;
 let treshold =15;
+let enemyIsCreated = false; //colision checker
 styleI = {
     font: '20px Arial',
     fill: '#FFFF00'
@@ -35,13 +36,13 @@ styleI = {
 
 
 let word = [];
-let chword = "nada";
 var correct = [];
 
 let currentEnemiesNum = 0;
 let lockedWord = -1; //para que una vez empiezas una palabra no te deje otras 
 let numeroIter = 0;
 let instructions;
+let screenText;
 
 
 //Random appearences
@@ -106,7 +107,7 @@ function createPlay() {
     
     textI="Score: \n Time: "+timeTimer+ "\n Wave: " + actualWave +"\n";
      
-    instructions = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER + 150,"", styleI);
+    screenText = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER + 150,textI, styleI);
 }
 
 function updateCounter(){
@@ -128,7 +129,6 @@ function createEnemiesPrueba(i){
     enemy.body.collideWorldBounds = true;
     enemy.body.velocity.setTo(100 * i, 200);
     enemies[i] = enemy;
-
     console.log("creado enemies["+i+"] es "+enemies[i]);
 
     console.log(word[w1]+" textword");
@@ -141,6 +141,8 @@ function createEnemiesPrueba(i){
     console.log("texto temporal["+i+"] es "+textoTemporal[i].text);
     console.log("words 0 es "+words[0]);
     words[i] = textoTemporal[i];
+    enemyIsCreated = true;//colision checker
+
     console.log("words["+i+"] es "+words[i].text);
         //}
     }
@@ -152,7 +154,7 @@ function createEnemies(number) {
         if(random >= 37){
         random = 1;
         }
-        let enemy = game.add.sprite(100 * i, 200, 'ufo');
+         enemy = game.add.sprite(100 * i, 200, 'ufo');
         game.physics.enable(enemy, Phaser.Physics.ARCADE);
         enemy.enableBody = true;
         enemy.exists = true;
@@ -173,6 +175,7 @@ function createEnemies(number) {
         
         //console.log(textwords[i]+" textword antes de texto temporal")
         textoTemporal[i] = game.add.text(enemy.x*treshold, enemy.y*treshold, textwords[i], styleI);
+        
         //textoTemporal.anchor.set(0.5);
         //console.log(words[0]);
         words[i] = textoTemporal[i];
@@ -189,7 +192,7 @@ function moveText() {
 
     
     for (var i = 0; i <= currentEnemiesNum-1; i++) {
-        console.log("current enemies "+currentEnemiesNum+" i moveText es "+i+", word es "+words[i].text );
+        //console.log("current enemies "+currentEnemiesNum+" i moveText es "+i+", word es "+words[i].text );
         words[i].x = Math.floor(enemies[i].body.x+treshold);
         words[i].y = Math.floor(enemies[i].body.y+treshold);
 
@@ -236,19 +239,6 @@ function createWaves() {
     //levelData.WavesData.forEach(createWave, this);
 }
 
-function managechWord() {
-    //   for(let i=0;i < word[w1][i];i++){
-   
-       if (chword == "nada") {
-           chword = word[w1][random];
-       }
-       if(palabradestruida == true){
-           chword = "nada";
-           palabradestruida = false;
-       }
-   //}
-   }
-
 function managetextwords() {
     /*console.log(rates[3] + 'rates');
 
@@ -282,23 +272,23 @@ function managetextwords() {
     }*/
 
 }
-/*function createWave(element) {
+function createWave(element) {
     
     //Wave = Wave.create(element.D, element.S, 'WaveConfig');
-/*
+
     for (let i = 0, max = element.WavesData[0].rate.length; i < max; i++)
         setupRate(element.WavesData[0].rate);
     
     for (let i = 0, max = element.WavesData[0].speed.length; i < max; i++)
-        setupSpeed(element.WavesData[0].speed);*/
-/* for (let i = 0, max = levelData.WavesData[i].words.length; i < max; i++)
+        setupSpeed(element.WavesData[0].speed);
+ for (let i = 0, max = levelData.WavesData[i].words.length; i < max; i++)
         
          word.push(levelData.WavesData[i].words);
 
     //for (let i = 0, max = element.WavesData[i].words.length; i < max; i++)
        // CreateWordList(element.WavesData[i].words[i]);
-/*        word = element.WavesData[0].words[0]*/
-//}
+       word = element.WavesData[0].words[0]
+}
 
 /////////////
 
@@ -360,7 +350,7 @@ function createSounds() {
 function updatePlay() {
     
     manageUpdateWave();
-  
+    //console.log("hola");
 
     
     //prueba
@@ -369,7 +359,7 @@ function updatePlay() {
        
          if(numeroIter<=ENEMIES_GROUP_SIZE){
            //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
-            if(totaltime>=levelData.WavesData[actualWave].rate){
+           if(totaltime>=levelData.WavesData[actualWave].rate){
                 //console.log("totaltime "+totaltime);
                 createEnemiesPrueba(numeroIter);
                 numeroIter++;
@@ -389,25 +379,26 @@ function updatePlay() {
 
     }
 
-
-
-  // instructions.setText(TEXT_OFFSET_HOR, TEXT_OFFSET_VER + 150, textI, styleI);
+    console.log
+    textI="Score: "+ killcount +"\n Time: "+timeTimer+ "\n Wave: " + actualWave +"\n";;
+   screenText.setText(textI);
     
     manageCraftMovements();
 
     moveText();
     stars.tilePosition.y += 1;
-    manageColision();       
-    manageCompleteWaves();
+    /*if(enemyIsCreated == true){ //colision checker
+        manageColision();
+    }*/
+    //manageCompleteWaves();
     keypressed();
 }
 function manageColision() {
-
     game.physics.arcade.overlap(
-        craft, enemies, enemyHitsCraft, null, this);
+        craft, enemy, enemyHitsCraft, null, this);
 
 }
-function manageCompleteWaves() {
+/*function manageCompleteWaves() {
     if (actualWave > waves) {
         enemy.kill(); //falta hacer que se generen los enemigos
         craft.kill();
@@ -415,10 +406,10 @@ function manageCompleteWaves() {
         game.state.start('win');
 
     }
-}
+}*/
 
 function enemyHitsCraft(craft, enemy) {
-    enemy.kill(); //falta hacer que se generen los enemigos
+    enemy.kill();
     craft.kill();
     console.log("Colision");
     game.state.start('gameOver');
@@ -548,10 +539,10 @@ function manageWords(char) {
 
 
     //  Loop through each letter of the word being entered and check them against the key that was pressed
-    
-    for (var i = 0; i < chword.length; i++) 
+    //He cambiado el length del for que era incorecto
+    for (var i = 0; i < textoTemporal.length; i++) 
     {
-        var letter = chword.charAt(i);
+        //var letter = chword.charAt(i);
         //  If they pressed one of the letters in the word, flag it as correct
 
         if(lockedWord==i)
@@ -565,10 +556,13 @@ function manageWords(char) {
                 //console.log(textoTemporal[i].text+" substring de 1 a lenght"+largo);
                 if(textoTemporal[i].text.length == 0)
                 {
+                    textoTemporal.slice(0,1).concat(textoTemporal.slice(1+1));
                     console.log("KILL "+textoTemporal[i].text+" i era "+i);
                     lockedWord = -1;
                     currentEnemiesNum--;
                     killcount++;
+                    if(enemies.length == 0)
+                    enemyIsCreated = false;
                     numeroIter--;
                     enemies[i].kill();
                     //si i es 0 todas necesitan irse a la izq (words[i]=words[i+1]). si era la ultima no se hace nada. 
@@ -584,7 +578,6 @@ function manageWords(char) {
                                 console.log("ahora palabra "+j+ " es " +words[j].text);
 
                             }
-                            
                         }
                         else if(i!=currentEnemiesNum){
                             for(var j=i;j<currentEnemiesNum;j++){
@@ -592,21 +585,22 @@ function manageWords(char) {
                                 words[j].text = words[j+1].text;
                                 enemies[j]=enemies[j+1];
                             }
-                        }  
+                        }
 
                         words[currentEnemiesNum].text="";
                     }
-                    else 
+                    else
                     {
                         if(i==0){
                             console.log("ELSE SOLO QUEDA 1");
+                            enemyIsCreated = false; //colision checker
+                            if(words[1]!= undefined){
                             words[0].text = words[1].text;
                             words[1].text="";
                             enemies[0]=enemies[1];
                         }
-                       
+                        }
                     }
-    
 
                 }
 
@@ -614,16 +608,17 @@ function manageWords(char) {
         }
         else if(lockedWord==-1)
         {
-<<<<<<< HEAD
-            
-            if (textoTemporal[i]!=null&& char == textoTemporal[i].text.substring(0,1)) 
-=======
-            console.log(textoTemporal[i]+"lockeword-1");
-            if (char == textoTemporal[i].text.substring(0,1)) 
->>>>>>> adcc0d7ea6590a606029c22af2c7bda833929d97
+
+            if (textoTemporal[i]==undefined && killcount>0){
+                console.log(textoTemporal[i]+" [i] = " +i+ "; se ha matado " + killcount);
+
+            //textoTemporal[i] =textoTemporal[i+1];
+        }
+
+            if (char == textoTemporal[i].text.substring(0,1))
+            //if (char == words[i].text.substring(0,1))
             {
                 lockedWord = i;
-            
                 let largo = textoTemporal[i].text.length;
                 textoTemporal[i].text = textoTemporal[i].text.substring(1,largo);
 
@@ -655,10 +650,12 @@ function resetMember(item) {
 }
 
 function manageUpdateWave() {
-    if (killcount > 1 /*word[w1].length*/ ){
+    if (killcount > 0 /*word[w1].length*/ ){
         killcount=0
         w2=0;
-        console.log("nextwave");
+        console.log("--->NEXTWAVE<---");
+        console.log(levelData.WavesData.length+" waves data length");
+        console.log(WavesToPlay+"actualwave");
         nextWave();
 }
 }
@@ -667,12 +664,17 @@ function nextWave() {
     //clearLevel();
     WavesToPlay += 1;
     w1++;
-    if (WavesToPlay > WavesData.length){
+    actualWave++;
+    console.log(actualWave)
+    if (actualWave == levelData.WavesData.length){
         w1=0;
+        actualWave=0;
+        WavesToPlay=0;
+         
         game.state.start('win');
         }
     else {
         game.input.enabled = true;
-        //game.state.start('play');
+        
     }
 }

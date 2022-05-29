@@ -1,7 +1,7 @@
 {
   "WavesData": [
     {"speed": 4,
-      "rate": 2,
+      "rate": 3,
 
 
       "words": [ "space","planet","amuse","tile","dark","matter","exile",
@@ -15,7 +15,7 @@
     },
 
     {"speed": 4,
-      "rate": 3,
+      "rate": 2,
       "words": [ "space","admire","obedient","variable",
                   "inspector","division","hypothesize","youth",
                   "zone","kick","surround","unaware","courtesy",
@@ -28,7 +28,7 @@
     },
 
     {"speed": 4,
-      "rate": 4,
+      "rate": 1,
       "words": [ "accompany","example","zenat","banish","withdraw",
                   "negotiation","responsibility","communication",
                   "judicial","qualification","fascinate",
@@ -38,7 +38,7 @@
                    "objective","dressing","misplace","zap"]
     },
     {"speed": 4,
-      "rate": 6,
+      "rate": 1,
       "words": [ "examination","advantage","mathematics","firefighter",
                 "ghostwriter","overwhelm","whisper","wilderness",
                 "reinforce","hypothesize","joystick", "knowledge",
@@ -47,5 +47,6 @@
                 "progressive","communist","underline","observation"
                 ,"landscape","xenomorph","breakdown","zenon"]
     }
+    
   ]
 }
