@@ -27,12 +27,12 @@ function createWin() {
     };
      instructions = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER-600, textI, styleI);
 
-     let textC = ' Accuracy:\n';
-     textC += ' 100 * number of correctly typed characters / number\n';
-     textC += 'of typed characters\n';
+     let textC = ' Accuracy: \n' +Math.floor(chartyped*100/chartotal);
+     /*textC += ' 100 * number of correctly typed characters / number\n';
+     textC += 'of typed characters\n';*/
 
     let styleC = {
-        font: '16px Arial',
+        font: '30px Arial',
         fill: '#FF0000'
     };
      credits = game.add.text(TEXT_OFFSET_HOR, game.world.height - TEXT_OFFSET_VER, textC, styleC);
@@ -40,7 +40,7 @@ function createWin() {
 
     let posX = game.world.width - SHIP_OFFSET_HOR;
     let posY = game.world.height - SHIP_OFFSET_VER;
-    btnStart = game.add.button(posX-350, posY-200, 'startbtn', startInit);
+    btnStart = game.add.button(posX-350, posY-300, 'startbtn', startInit);
     btnStart.anchor.setTo(0.25, 0.25);
     btnStart.scale.setTo(2.0);
    /* ///////////////////////////

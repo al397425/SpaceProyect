@@ -28,6 +28,8 @@ let styleI;
 let random;
 let killcount = 0;
 let treshold =15;
+let chartyped;//gameover screen
+let chartotal;//gameover screen
 let enemyIsCreated = false; //colision checker
 styleI = {
     font: '20px Arial',
@@ -70,7 +72,9 @@ function preloadPlay() {
     game.load.image('laser',
         'assets/imgs/laser.png');
     game.load.audio('sndlaser',
-        'assets/snds/laser.wav');
+        'assets/snds/laser.mp3');
+        game.load.audio('stage',
+        'assets/snds/stage.mp3');
     loadWaves(WavesToPlay);
 
 }
@@ -80,6 +84,13 @@ function loadWaves(Wave) {
 }
 
 function createPlay() {
+    //reset variables to play again
+    chartotal = 0; //game over screen
+    chartyped = 0; //game over screen
+    totaltime = 0;
+    killcount = 0;
+    timeTimer = 0;
+    numeroIter = 0;
     random = Math.floor(Math.random() * 27);
     let w = game.world.width;
     let h = game.world.height;
@@ -108,6 +119,8 @@ function createPlay() {
     textI="Score: \n Time: "+timeTimer+ "\n Wave: " + actualWave +"\n";
      
     screenText = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER + 150,textI, styleI);
+    stageMusic.play();
+    stageMusic.volume = 0.6;
 }
 
 function updateCounter(){
@@ -127,7 +140,7 @@ function createEnemiesPrueba(i){
     enemy.exists = true;
     enemy.body.bounce.set(0.8);
     enemy.body.collideWorldBounds = true;
-    enemy.body.velocity.setTo(100 * i, 200);
+    enemy.body.velocity.setTo(levelData.WavesData[actualWave].speed, levelData.WavesData[actualWave].speed);
     enemies[i] = enemy;
     console.log("creado enemies["+i+"] es "+enemies[i]);
 
@@ -160,7 +173,7 @@ function createEnemies(number) {
         enemy.exists = true;
         enemy.body.bounce.set(0.8);
         enemy.body.collideWorldBounds = true;
-        enemy.body.velocity.setTo(100 * i, 200);
+        enemy.body.velocity.setTo(100*i,200);
         enemies[i] = enemy;
 
         //for (let y = 0, max = number*2; c < max; c = c + 2) {
@@ -190,7 +203,7 @@ function createEnemies(number) {
 function moveText() {
 
 
-    
+
     for (var i = 0; i <= currentEnemiesNum-1; i++) {
         //console.log("current enemies "+currentEnemiesNum+" i moveText es "+i+", word es "+words[i].text );
         words[i].x = Math.floor(enemies[i].body.x+treshold);
@@ -201,6 +214,7 @@ function moveText() {
 }
 
 function createWaves() {
+    
     random = Math.floor(Math.random() * 27);
     console.log(levelData.WavesData); //waves
     console.log(levelData.WavesData[0]);
@@ -345,19 +359,23 @@ function activateEnemy() {
 
 function createSounds() {
     soundLaser = game.add.audio('sndlaser');
+    stageMusic = game.add.audio('stage');
 }
 
 function updatePlay() {
-    
+    if(currentEnemiesNum >= 1){
+    manageDirection();
+}
     manageUpdateWave();
-    //console.log("hola");
-
     
     //prueba
+    console.log(currentEnemiesNum+" current enemies ");
+    console.log(flag+" flag")
      if(flag == true){
         timer.start();
-       
-         if(numeroIter<=ENEMIES_GROUP_SIZE){
+     
+        console.log("pipo");
+         if(numeroIter<=ENEMIES_GROUP_SIZE && currentEnemiesNum <= ENEMIES_GROUP_SIZE){
            //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
            if(totaltime>=levelData.WavesData[actualWave].rate){
                 //console.log("totaltime "+totaltime);
@@ -375,10 +393,15 @@ function updatePlay() {
         if(numeroIter>=ENEMIES_GROUP_SIZE){
             console.log("pause");
             timer.pause();
-            flag = false;}
+            flag = false;
+        }
 
     }
+    if(currentEnemiesNum == 0 ){
 
+        //timer.start();
+        flag = true;
+    }
     console.log
     textI="Score: "+ killcount +"\n Time: "+timeTimer+ "\n Wave: " + actualWave +"\n";;
    screenText.setText(textI);
@@ -536,7 +559,7 @@ function manageCraftMovements() {
 
 function manageWords(char) {
 
-
+    chartotal++;
 
     //  Loop through each letter of the word being entered and check them against the key that was pressed
     //He cambiado el length del for que era incorecto
@@ -549,7 +572,7 @@ function manageWords(char) {
         {
             if (char == textoTemporal[i].text.substring(0,1)) 
             {
-
+                chartyped++;
                 let largo = textoTemporal[i].text.length;
                 textoTemporal[i].text = textoTemporal[i].text.substring(1,largo);
 
@@ -561,6 +584,9 @@ function manageWords(char) {
                     lockedWord = -1;
                     currentEnemiesNum--;
                     killcount++;
+                    stageMusic.volume = 0.2;
+                    soundLaser.play();
+                    stageMusic.volume = 0.5;
                     if(enemies.length == 0)
                     enemyIsCreated = false;
                     numeroIter--;
@@ -629,6 +655,26 @@ function manageWords(char) {
     }
 }
 
+function manageDirection(){
+    /*let speed = levelData.WavesData[actualWave].speed;
+    console.log("enemies.length "+ enemies[0].length);
+    for(let i = 0; i < currentEnemiesNum;i++){
+
+    if(craft.body.x > enemies[i].body.x){
+        enemies[i].body.x = enemies[i].body.x +speed;
+    }
+    if(craft.body.y > enemies[i].body.y){
+        enemies[i].body.x = enemies[i].body.x +speed;
+    }
+    if(craft.body.x < enemies[i].body.x){
+        enemies[i].body.x = enemies[i].body.x -speed;
+    }
+    if(craft.body.y < enemies[i].body.y){
+        enemies[i].body.x = enemies[i].body.x -speed;
+    }
+}*/
+}
+
 function createCraft() {
     let x = game.world.centerX;
     let y = game.world.height - HUD_HEIGHT;
@@ -665,12 +711,14 @@ function nextWave() {
     WavesToPlay += 1;
     w1++;
     actualWave++;
-    console.log(actualWave)
+    console.log(actualWave);
     if (actualWave == levelData.WavesData.length){
+        stageMusic.stop();
         w1=0;
         actualWave=0;
         WavesToPlay=0;
-         
+        currentEnemiesNum =0;
+        flag = true;
         game.state.start('win');
         }
     else {

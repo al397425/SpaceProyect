@@ -23,9 +23,13 @@ function preloadInit() {
     game.load.image('ufo','assets/imgs/ufo.png');
     game.load.image('stars',
     'assets/imgs/stars.png');
+    game.load.audio('menu',
+    'assets/snds/menu.mp3');
 }
 
 function createInit() {
+    createSoundsi();
+    
     let w = game.world.width;
     let h = game.world.height;
     stars = game.add.tileSprite(
@@ -69,6 +73,11 @@ function createInit() {
     /*imgUfo = game.add.image(posX, posY, 'ufo');
     imgUfo.anchor.setTo(0.5, 0.5);
     imgUfo.scale.setTo(2.0);*/
+    soundMenuMusic.play();
+    soundMenuMusic.volume = 0.5;
+}
+function createSoundsi() {
+    soundMenuMusic = game.add.audio('menu');
 }
 function updateInit(){
     stars.tilePosition.y += 1;
@@ -76,6 +85,7 @@ function updateInit(){
 
 function startPlay() {
     game.state.start('play');
+    soundMenuMusic.stop();
 }
 /*function startPlayB() {
     game.state.start('playB');
