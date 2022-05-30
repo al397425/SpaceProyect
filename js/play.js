@@ -51,9 +51,6 @@ let killcountTotal = 0;
 let treshold = 15;
 let chartyped; //gameover screen
 let chartotal; //gameover screen
-/*let enemyIsCreated = false; //colision checker
-let enemyIsCreatedR = false; //colision checker
-let enemyIsCreatedF = false; //colision checker*/
 let PartA = 0;
 let PartB = 1;
 let CompletedGame = 0;
@@ -256,37 +253,29 @@ function updateCounterCh() {
     timetimerch++;
 }
 
+
 function updateCounterF() {
     timetimerchF++;
 }
 
 function createEnemies(i) {
-    //console.log(CompletedGame + "complete game antes d epasa por aqui/////////");
+
     if (CompletedGame == 1) {
         let enemy;
     }
-    if (CompletedGame == 0) {
-
-        random = Math.floor(Math.random() * 27);
-        enemy = game.add.sprite(50 * i, 50, 'ufo');
-        game.physics.enable(enemy, Phaser.Physics.ARCADE);
-        enemy.enableBody = true;
-        enemy.exists = true;
-        enemy.body.bounce.set(0.8);
-        enemy.body.collideWorldBounds = true;
-        enemy.body.velocity.setTo(levelData.WavesData[actualWave].speed, levelData.WavesData[actualWave].speed);
-        enemies[i] = enemy;
-
-        textwords[i] = (word[w1][random]);
-
-        textoTemporal[i] = game.add.text(enemy.x + treshold, enemy.y + treshold, textwords[i], styleI);
-
-        words[i] = textoTemporal[i];
-        //enemyIsCreated = true; //colision checker
-
-    }
+    random = Math.floor(Math.random() * 27);
+    enemy = game.add.sprite(50 * i, 50, 'ufo');
+    game.physics.enable(enemy, Phaser.Physics.ARCADE);
+    enemy.enableBody = true;
+    enemy.exists = true;
+    enemy.body.bounce.set(0.8);
+    enemy.body.collideWorldBounds = true;
+    enemy.body.velocity.setTo(levelData.WavesData[actualWave].speed, levelData.WavesData[actualWave].speed);
+    enemies[i] = enemy;
+    textwords[i] = (word[w1][random]);
+    textoTemporal[i] = game.add.text(enemy.x + treshold, enemy.y + treshold, textwords[i], styleI);
+    words[i] = textoTemporal[i];
 }
-
 function createEnemiesReplicator(i) {
 
     random = Math.floor(Math.random() * 27);
@@ -302,7 +291,6 @@ function createEnemiesReplicator(i) {
 
     textoTemporalR[i] = game.add.text(enemyR.x + treshold, enemyR.y + treshold, textwordsR[i], styleIR);
     wordsR[i] = textoTemporalR[i];
-    //enemyIsCreatedR = true; //colision checker
 
 }
 
@@ -321,10 +309,6 @@ function createEnemiesFan(i) {
     textwordsF[i] = (wordFan[random]);
     textoTemporalF[i] = game.add.text(enemyF.x + treshold, enemyF.y + treshold, textwordsF[i], styleIR);
     wordsF[i] = textoTemporalF[i];
-    //enemyIsCreatedF = true; //colision checker
-
-    //}
-
 }
 
 function createEnemiesFanCh(i) {
@@ -339,15 +323,12 @@ function createEnemiesFanCh(i) {
     enemyFch.body.collideWorldBounds = true;
     enemyFch.body.velocity.setTo(levelData.WavesData[actualWave].speed, levelData.WavesData[actualWave].speed);
     enemiesFch[i] = enemyFch;
-
     textwordsFch[i] = (wordCh[random]);
-
     textoTemporalFch[i] = game.add.text(enemyFch.x + treshold, enemyFch.y + treshold, textwordsFch[i], styleIR);
-
     wordsFch[i] = textoTemporalFch[i];
-    //enemyIsCreatedR = true; //colision checker
 
 }
+
 
 function moveText() {
 
@@ -692,7 +673,6 @@ function enemyHitsCraft(craft, enemy) {
     stageMusic.stop();
     game.state.start('gameOver');
 }
-
 function createkeyboard() {
     AButton = game.input.keyboard.addKey(
         Phaser.Keyboard.A);
@@ -1000,8 +980,6 @@ function manageWords(char) {
                     killcount++;
                     killcountTotal++;
                     soundLaser.play();
-                    /*if (enemies.length == 0)
-                        enemyIsCreated = false;*/
                     numeroIter--;
                     enemies[i].kill();
                     //si i es 0 todas necesitan irse a la izq (words[i]=words[i+1]). si era la ultima no se hace nada. 
@@ -1029,7 +1007,6 @@ function manageWords(char) {
                     } else {
                         if (i == 0) {
                             console.log("ELSE SOLO QUEDA 1");
-                            //enemyIsCreated = false; //colision checker
                             if (words[1] != undefined) {
                                 words[0].text = words[1].text;
                                 words[1].text = "";
@@ -1087,8 +1064,6 @@ function manageWordsR(char) {
                     currentEnemiesNumReplicator--;
                     killcount++;
                     killcountTotal++;
-                    /*if (enemiesR.length == 0)
-                        enemyIsCreatedR = false;*/
                     numeroIterR--;
                     enemiesR[i].kill();
                     //si i es 0 todas necesitan irse a la izq (words[i]=words[i+1]). si era la ultima no se hace nada. 
@@ -1116,7 +1091,7 @@ function manageWordsR(char) {
                     } else {
                         if (i == 0) {
                             console.log("ELSE SOLO QUEDA 1");
-                            //enemyIsCreatedR = false; //colision checker
+
                             if (wordsR[1] != undefined) {
                                 wordsR[0].text = wordsR[1].text;
                                 wordsR[1].text = "";
