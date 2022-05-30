@@ -35,6 +35,7 @@ function createInit() {
     
     let w = game.world.width;
     let h = game.world.height;
+    
     stars = game.add.tileSprite(
         0, 0, w, h, 'stars');
     let textI = 'Space Shooter \n';

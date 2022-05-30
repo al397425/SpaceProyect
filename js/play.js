@@ -36,6 +36,7 @@ let random;
 let enemy;
 let enemyR;
 let killcount = 0;
+let killcountTotal = 0;
 let treshold = 15;
 let chartyped; //gameover screen
 let chartotal; //gameover screen
@@ -114,6 +115,9 @@ function loadWaves(Wave) {
 }
 
 function createPlay() {
+    createSounds();
+    stageMusic.play();
+    stageMusic.volume = 0.6;
     if (CompletedGame == 1) {
         let enemies;
 
@@ -126,6 +130,7 @@ function createPlay() {
     totaltime = 0;
     totaltimeR = 0;
     killcount = 0;
+    killcountTotal = 0;
     timeTimer = 0;
     timetimerch = 0;
     numeroIter = 0;
@@ -138,7 +143,7 @@ function createPlay() {
         0, 0, w, h, 'stars');
     createCraft();
     createKeyControls();
-    createSounds();
+    
     createkeyboard();
 
     levelData = JSON.parse(game.cache.getText('WavesPartA'));
@@ -149,6 +154,9 @@ function createPlay() {
         enemies.enableBody = true;
     }
     if (gamestate == PartB) {
+        if (CompletedGame == 1) {
+            let enemiesR;
+        }
         enemiesR = game.add.group();
 
         enemiesR.enableBody = true;
@@ -170,11 +178,10 @@ function createPlay() {
     createWaves();
     game.input.keyboard.addCallbacks(this, null, null, keypressed);
 
-    textI = "Score: " + killcount + "\n Time: " + totaltime + "\n Wave: " + actualWave + "\n";
+    textI = "Score: " + killcountTotal + "\n Time: " + totaltime + "\n Wave: " + actualWave + "\n";
 
     screenText = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER + 150, textI, styleI);
-    stageMusic.play();
-    stageMusic.volume = 0.6;
+    
 }
 
 function updateCounter() {
@@ -324,31 +331,36 @@ function createEnemies(number) {
 
 function moveText() {
 
-
+    
 
     for (var i = 0; i <= currentEnemiesNum - 1; i++) {
+        console.log("bucle");
         if (enemies[i] != undefined && enemies[i].body != null) {
 
-            //console.log("current enemies "+currentEnemiesNum+" i moveText es "+i+", word es "+words[i].text );
-            //console.log("//////////" + enemies[i] + "////////////////");
             words[i].x = Math.floor(enemies[i].body.x - treshold - treshold / 4);
             words[i].y = Math.floor(enemies[i].body.y - treshold - treshold / 4);
             game.physics.arcade.overlap(
                 craft, enemies[i], enemyHitsCraft, null, this);
+            }
+        }
 
-
-
+        for (var i = 0; i <= currentEnemiesNumReplicator - 1; i++) {
             if (gamestate == PartB) {
-                for (var i = 0; i <= currentEnemiesNumReplicator - 1; i++) {
-                    //console.log("current enemies "+currentEnemiesNum+" i moveText es "+i+", word es "+words[i].text );
+                console.log("Part B Move Text");
+                console.log("/////////"+enemiesR[i]);
+                if (enemiesR[i] != undefined && enemiesR[i].body != null) {
+
+                for (var i = 0; i <= currentEnemiesNumReplicator-1 ; i++) {
                     wordsR[i].x = Math.floor(enemiesR[i].body.x + treshold);
                     wordsR[i].y = Math.floor(enemiesR[i].body.y + treshold);
-                    //console.log(wordsR);
+                    game.physics.arcade.overlap(
+                        craft, enemiesR[i], enemyHitsCraft, null, this);
+                    
 
                 }
             }
         }
-    }
+        }
 
 }
 
@@ -471,6 +483,9 @@ function createSounds() {
 function updatePlay() {
     timerTotal.start();
     if(CompletedGame == 1){
+        if(gamestate == PartB){
+            timerR.resume();
+        }
         
         timerTotal.resume();
     }
@@ -485,7 +500,7 @@ function updatePlay() {
             timerR.resume();
             if (numeroIterR <= ENEMIES_GROUP_SIZE_REPLICATOR) {
                 //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
-                if (timeTimerR - 2 >= levelData.WavesData[actualWave].rate) {
+                if (timeTimerR>= levelData.WavesData[actualWave].rate+5) {
                     //console.log("totaltime "+totaltime);
                     createEnemiesPruebaReplicator(numeroIterR);
 
@@ -495,8 +510,8 @@ function updatePlay() {
                 }
             }
             if (numeroIterR >= ENEMIES_GROUP_SIZE_REPLICATOR) {
-                console.log("pause");
-                timerR.pause();
+                //console.log("pause");
+                //timerR.pause();
 
             }
         }
@@ -513,10 +528,10 @@ function updatePlay() {
                 timerch.resume();
                 if (numeroIterch <= ENEMIES_GROUP_SIZE_CHILDREN) {
                     //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
-                    if (timetimerch - 5 >= levelData.WavesData[actualWave].rate) {
+                    if (timetimerch - 5 >= levelData.WavesData[actualWave].rate+5) {
                         //console.log("totaltime "+totaltime);
                         createEnemiesPrueba(numeroIterch);
-                        numeroItech++;
+                        numeroIterch++;
                         timetimerch = 0
                         currentEnemiesNumCh++;
                         currentEnemiesNum++;
@@ -588,7 +603,7 @@ function updatePlay() {
 
         flag = true;
     }
-    textI = "Score: " + killcount + "\n Time: " + timeTimer + "\n Wave: " + actualWave + "\n";;
+    textI = "Score: " + killcountTotal + "\n Time: " + timeTimer + "\n Wave: " + actualWave + "\n";;
     screenText.setText(textI);
 
     manageCraftMovements();
@@ -617,12 +632,17 @@ function manageColision() {
 }
 
 function enemyHitsCraft(craft, enemy) {
+    if(gamestate == PartB){
+        enemyR.kill();
+        currentEnemiesNumReplicator =0;
+    }
     enemy.kill();
     craft.kill();
     console.log("Colision");
     CompletedGame = 1;
     console.log(CompletedGame+"complete game");
     currentEnemiesNum =0;
+    stageMusic.stop();
     game.state.start('gameOver');
 }
 
@@ -828,9 +848,8 @@ function manageWords(char) {
                     lockedWord = -1;
                     currentEnemiesNum--;
                     killcount++;
-                    stageMusic.volume = 0.2;
+                    killcountTotal++;
                     soundLaser.play();
-                    stageMusic.volume = 0.5;
                     if (enemies.length == 0)
                         enemyIsCreated = false;
                     numeroIter--;
@@ -917,7 +936,7 @@ function manageWordsR(char) {
                     lockedWordR = -1;
                     currentEnemiesNumReplicator--;
                     killcount++;
-
+                    killcountTotal++;
                     if (enemiesR.length == 0)
                         enemyIsCreatedR = false;
                     numeroIterR--;
@@ -1006,6 +1025,7 @@ function createCraft() {
     let y = game.world.height - HUD_HEIGHT;
     craft = game.add.sprite(x, y, 'craft');
     craft.anchor.setTo(0.5, 0.5);
+    craft.scale.setTo(0.2,0.2);
     game.physics.arcade.enable(craft);
     craft.body.collideWorldBounds = true;
 }
