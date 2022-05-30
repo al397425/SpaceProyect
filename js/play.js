@@ -198,38 +198,13 @@ function updateCounterCh() {
     timetimerch++;
 }
 
-function createEnemiesPrueba(i) {
+function createEnemies(i) {
     console.log(CompletedGame+"complete game antes d epasa por aqui/////////");
     if (CompletedGame == 1) {
         console.log("Pasa por aqui");
         let enemy;
-        random = Math.floor(Math.random() * 27);
-        enemy = game.add.sprite(50 * i, 50, 'ufo');
-        game.physics.enable(enemy, Phaser.Physics.ARCADE);
-        enemy.enableBody = true;
-        enemy.exists = true;
-        enemy.body.bounce.set(0.8);
-        enemy.body.collideWorldBounds = true;
-        enemy.body.velocity.setTo(levelData.WavesData[actualWave].speed, levelData.WavesData[actualWave].speed);
-        enemies[i] = enemy;
-        console.log("creado enemies[" + i + "] es " + enemies[i]);
-
-        console.log(word[w1] + " textword");
-
-        textwords[i] = (word[w1][random]);
-
-        console.log("textword antes de texto temporal " + textwords[i]);
-        textoTemporal[i] = game.add.text(enemy.x + treshold, enemy.y + treshold, textwords[i], styleI);
-        //textoTemporal.anchor.set(0.5);
-        console.log("texto temporal[" + i + "] es " + textoTemporal[i].text);
-        console.log("words 0 es " + words[0]);
-        words[i] = textoTemporal[i];
-        enemyIsCreated = true; //colision checker
-
-        console.log("words[" + i + "] es " + words[i].text);
-        //}
+        
     }
-    if(CompletedGame == 0){
 
     
     random = Math.floor(Math.random() * 27);
@@ -259,9 +234,9 @@ function createEnemiesPrueba(i) {
     //}
 
 }
-}
 
-function createEnemiesPruebaReplicator(i) {
+
+function createEnemiesReplicator(i) {
 
     random = Math.floor(Math.random() * 27);
     enemyR = game.add.sprite(50 * i, 50, 'Bigufo');
@@ -290,44 +265,7 @@ function createEnemiesPruebaReplicator(i) {
 
 }
 
-function createEnemies(number) {
 
-    for (var i = 0; i <= number; i++, random++) {
-        if (random >= 37) {
-            random = 1;
-        }
-        enemy = game.add.sprite(100 * i, 200, 'ufo');
-        game.physics.enable(enemy, Phaser.Physics.ARCADE);
-        enemy.enableBody = true;
-        enemy.exists = true;
-        enemy.body.bounce.set(0.8);
-        enemy.body.collideWorldBounds = true;
-        enemy.body.velocity.setTo(100 * i, 200);
-        enemies[i] = enemy;
-
-        //for (let y = 0, max = number*2; c < max; c = c + 2) {
-
-        // console.log("genera texto"+ i);
-        //console.log(word[i][c] + " textword tiene");
-        console.log(word[w1] + " textword");
-        console.log(random + "random");
-        textwords[i] = word[w1][random];
-        //console.log(textwords[i]+"textword tiene");
-        //console.log("deberia pushear en la siguiente " +word[i]);
-
-        //console.log(textwords[i]+" textword antes de texto temporal")
-        textoTemporal[i] = game.add.text(enemy.x * treshold, enemy.y * treshold, textwords[i], styleI);
-
-        //textoTemporal.anchor.set(0.5);
-        //console.log(words[0]);
-        words[i] = textoTemporal[i];
-        //console.log(textoTemporal[0]+"texto temporal que")
-        //}
-
-    }
-
-
-}
 
 function moveText() {
 
@@ -502,7 +440,7 @@ function updatePlay() {
                 //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
                 if (timeTimerR>= levelData.WavesData[actualWave].rate+5) {
                     //console.log("totaltime "+totaltime);
-                    createEnemiesPruebaReplicator(numeroIterR);
+                    createEnemiesReplicator(numeroIterR);
 
                     numeroIterR++;
                     timeTimerR = 0;
@@ -530,7 +468,7 @@ function updatePlay() {
                     //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
                     if (timetimerch - 5 >= levelData.WavesData[actualWave].rate+5) {
                         //console.log("totaltime "+totaltime);
-                        createEnemiesPrueba(numeroIterch);
+                        createEnemies(numeroIterch);
                         numeroIterch++;
                         timetimerch = 0
                         currentEnemiesNumCh++;
@@ -581,7 +519,7 @@ function updatePlay() {
             //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
             if (totaltime >= levelData.WavesData[actualWave].rate) {
                 //console.log("totaltime "+totaltime);
-                createEnemiesPrueba(numeroIter);
+                createEnemies(numeroIter);
                 numeroIter++;
                 totaltime = 0
                 currentEnemiesNum++;
