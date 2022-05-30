@@ -43,6 +43,7 @@ let enemyIsCreated = false; //colision checker
 let enemyIsCreatedR = false; //colision checker
 let PartA = 0;
 let PartB = 1;
+let CompletedGame = 0;
 styleI = {
     font: '20px Arial',
     fill: '#FFFF00'
@@ -113,7 +114,12 @@ function loadWaves(Wave) {
 }
 
 function createPlay() {
+    if (CompletedGame == 1) {
+        let enemies;
 
+        enemies = game.add.group();
+        enemies.enableBody = true;
+    }
     //reset variables to play again
     chartotal = 0; //game over screen
     chartyped = 0; //game over screen
@@ -136,10 +142,12 @@ function createPlay() {
     createkeyboard();
 
     levelData = JSON.parse(game.cache.getText('WavesPartA'));
+    if (CompletedGame == 0) {
 
-    enemies = game.add.group();
+        enemies = game.add.group();
 
-    enemies.enableBody = true;
+        enemies.enableBody = true;
+    }
     if (gamestate == PartB) {
         enemiesR = game.add.group();
 
@@ -152,7 +160,7 @@ function createPlay() {
     timer.loop(1000, updateCounter, this);
     timerTotal = game.time.create(false);
     timerTotal.loop(1000, updateCounterTotal, this);
-    if(gamestate == PartB){
+    if (gamestate == PartB) {
         timerR = game.time.create(false);
         timerR.loop(1000, updateCounterCh, this);
         timerch = game.time.create(false);
@@ -162,7 +170,7 @@ function createPlay() {
     createWaves();
     game.input.keyboard.addCallbacks(this, null, null, keypressed);
 
-    textI = "Score: "+killcount+"\n Time: " + totaltime + "\n Wave: " + actualWave + "\n";
+    textI = "Score: " + killcount + "\n Time: " + totaltime + "\n Wave: " + actualWave + "\n";
 
     screenText = game.add.text(TEXT_OFFSET_HOR, TEXT_OFFSET_VER + 150, textI, styleI);
     stageMusic.play();
@@ -173,16 +181,50 @@ function updateCounter() {
     timeTimer++;
     timeTimerR++;
 }
+
 function updateCounterTotal() {
     totaltime++;
     console.log("totaltime " + totaltime);
 }
+
 function updateCounterCh() {
     timetimerch++;
 }
 
 function createEnemiesPrueba(i) {
+    console.log(CompletedGame+"complete game antes d epasa por aqui/////////");
+    if (CompletedGame == 1) {
+        console.log("Pasa por aqui");
+        let enemy;
+        random = Math.floor(Math.random() * 27);
+        enemy = game.add.sprite(50 * i, 50, 'ufo');
+        game.physics.enable(enemy, Phaser.Physics.ARCADE);
+        enemy.enableBody = true;
+        enemy.exists = true;
+        enemy.body.bounce.set(0.8);
+        enemy.body.collideWorldBounds = true;
+        enemy.body.velocity.setTo(levelData.WavesData[actualWave].speed, levelData.WavesData[actualWave].speed);
+        enemies[i] = enemy;
+        console.log("creado enemies[" + i + "] es " + enemies[i]);
 
+        console.log(word[w1] + " textword");
+
+        textwords[i] = (word[w1][random]);
+
+        console.log("textword antes de texto temporal " + textwords[i]);
+        textoTemporal[i] = game.add.text(enemy.x + treshold, enemy.y + treshold, textwords[i], styleI);
+        //textoTemporal.anchor.set(0.5);
+        console.log("texto temporal[" + i + "] es " + textoTemporal[i].text);
+        console.log("words 0 es " + words[0]);
+        words[i] = textoTemporal[i];
+        enemyIsCreated = true; //colision checker
+
+        console.log("words[" + i + "] es " + words[i].text);
+        //}
+    }
+    if(CompletedGame == 0){
+
+    
     random = Math.floor(Math.random() * 27);
     enemy = game.add.sprite(50 * i, 50, 'ufo');
     game.physics.enable(enemy, Phaser.Physics.ARCADE);
@@ -209,6 +251,7 @@ function createEnemiesPrueba(i) {
     console.log("words[" + i + "] es " + words[i].text);
     //}
 
+}
 }
 
 function createEnemiesPruebaReplicator(i) {
@@ -284,22 +327,26 @@ function moveText() {
 
 
     for (var i = 0; i <= currentEnemiesNum - 1; i++) {
-        //console.log("current enemies "+currentEnemiesNum+" i moveText es "+i+", word es "+words[i].text );
+        if (enemies[i] != undefined && enemies[i].body != null) {
 
-        words[i].x = Math.floor(enemies[i].body.x - treshold-treshold/4);
-        words[i].y = Math.floor(enemies[i].body.y - treshold-treshold/4);
-        game.physics.arcade.overlap(
-            craft, enemies[i], enemyHitsCraft, null, this);
-
-
-    }
-    if (gamestate == PartB) {
-        for (var i = 0; i <= currentEnemiesNumReplicator - 1; i++) {
             //console.log("current enemies "+currentEnemiesNum+" i moveText es "+i+", word es "+words[i].text );
-            wordsR[i].x = Math.floor(enemiesR[i].body.x + treshold);
-            wordsR[i].y = Math.floor(enemiesR[i].body.y + treshold);
-            console.log(wordsR);
+            //console.log("//////////" + enemies[i] + "////////////////");
+            words[i].x = Math.floor(enemies[i].body.x - treshold - treshold / 4);
+            words[i].y = Math.floor(enemies[i].body.y - treshold - treshold / 4);
+            game.physics.arcade.overlap(
+                craft, enemies[i], enemyHitsCraft, null, this);
 
+
+
+            if (gamestate == PartB) {
+                for (var i = 0; i <= currentEnemiesNumReplicator - 1; i++) {
+                    //console.log("current enemies "+currentEnemiesNum+" i moveText es "+i+", word es "+words[i].text );
+                    wordsR[i].x = Math.floor(enemiesR[i].body.x + treshold);
+                    wordsR[i].y = Math.floor(enemiesR[i].body.y + treshold);
+                    //console.log(wordsR);
+
+                }
+            }
         }
     }
 
@@ -423,6 +470,11 @@ function createSounds() {
 
 function updatePlay() {
     timerTotal.start();
+    if(CompletedGame == 1){
+        
+        timerTotal.resume();
+    }
+    
     if (gamestate == PartB) {
         //console.log("Parte B ")
         ////////////////////////////////////////////////////////
@@ -433,10 +485,10 @@ function updatePlay() {
             timerR.resume();
             if (numeroIterR <= ENEMIES_GROUP_SIZE_REPLICATOR) {
                 //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
-                if (timeTimerR-2 >= levelData.WavesData[actualWave].rate) {
+                if (timeTimerR - 2 >= levelData.WavesData[actualWave].rate) {
                     //console.log("totaltime "+totaltime);
                     createEnemiesPruebaReplicator(numeroIterR);
-                    console.log("pipo");
+
                     numeroIterR++;
                     timeTimerR = 0;
                     currentEnemiesNumReplicator++;
@@ -461,7 +513,7 @@ function updatePlay() {
                 timerch.resume();
                 if (numeroIterch <= ENEMIES_GROUP_SIZE_CHILDREN) {
                     //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
-                    if (timetimerch-5 >= levelData.WavesData[actualWave].rate) {
+                    if (timetimerch - 5 >= levelData.WavesData[actualWave].rate) {
                         //console.log("totaltime "+totaltime);
                         createEnemiesPrueba(numeroIterch);
                         numeroItech++;
@@ -487,10 +539,10 @@ function updatePlay() {
                 flag = true;
             }
         }
-        if(currentEnemiesNumReplicator == 1){
+        if (currentEnemiesNumReplicator == 1) {
             keypressedR();
         }
-        
+
     }
     ///////////
     //Part B código de arriba
@@ -554,12 +606,12 @@ function updatePlay() {
 }
 
 function manageColision() {
-    for(let i = 0;i <= enemies.length;i++){
-    console.log("////////")
-    console.log(enemies[i]);
-    console.log(enemies[0] + " enemy");
-    game.physics.arcade.overlap(
-        craft, enemies[i], enemyHitsCraft(), null, this);
+    for (let i = 0; i <= enemies.length; i++) {
+        console.log("////////")
+        console.log(enemies[i]);
+        console.log(enemies[0] + " enemy");
+        game.physics.arcade.overlap(
+            craft, enemies[i], enemyHitsCraft(), null, this);
     }
 
 }
@@ -568,6 +620,9 @@ function enemyHitsCraft(craft, enemy) {
     enemy.kill();
     craft.kill();
     console.log("Colision");
+    CompletedGame = 1;
+    console.log(CompletedGame+"complete game");
+    currentEnemiesNum =0;
     game.state.start('gameOver');
 }
 
@@ -680,6 +735,7 @@ function keypressed() {
     if (ZButton.justDown)
         manageWords('z');
 }
+
 function keypressedR() {
     ///////Part B////////
     /////////////////////
@@ -990,6 +1046,7 @@ function nextWave() {
         currentEnemiesNum = 0;
         currentEnemiesNumReplicator = 0;
         flag = true;
+        CompletedGame = 1;
         game.state.start('win');
     } else {
         game.input.enabled = true;
