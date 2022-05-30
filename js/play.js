@@ -262,6 +262,8 @@ function moveText() {
         //console.log("current enemies "+currentEnemiesNum+" i moveText es "+i+", word es "+words[i].text );
         words[i].x = Math.floor(enemies[i].body.x + treshold);
         words[i].y = Math.floor(enemies[i].body.y + treshold);
+        game.physics.arcade.overlap(
+            craft, enemies[i], enemyHitsCraft, null, this);
 
     }
     if (gamestate == PartB) {
