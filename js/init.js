@@ -8,6 +8,7 @@ let btnStartB;
 let imgUfo;
 let btnAbout;
 let stars;
+let gamestate = 0;
 let initState = {
     preload: preloadInit,
     create: createInit,
@@ -15,12 +16,14 @@ let initState = {
 };
 
 let WavesToPlay = 0;
+let WavesToPlayB = 0;
 
 function preloadInit() {
     game.load.image('playbtn', 'assets/imgs/button_play.png');
-    //game.load.image('playbtnb', 'assets/imgs/button_play.png');
+    game.load.image('playbtnb', 'assets/imgs/button_playB.png');
     game.load.image('aboutbtn', 'assets/imgs/button_about.png');
     game.load.image('ufo','assets/imgs/ufo.png');
+    game.load.image('Bigufo','assets/imgs/Bigufo.png');
     game.load.image('stars',
     'assets/imgs/stars.png');
     game.load.audio('menu',
@@ -48,13 +51,13 @@ function createInit() {
 
     let posX = game.world.width - SHIP_OFFSET_HOR;
     let posY = game.world.height - SHIP_OFFSET_VER;
-    btnStart = game.add.button(posX-450, posY-50, 'playbtn', startPlay);
+    btnStart = game.add.button(posX-400, posY-200, 'playbtn', startPlay);
     btnStart.anchor.setTo(0.5, 0.5);
     btnStart.scale.setTo(1.1);
     //button Part B
-    /*btnStartB = game.add.button(posX-650, posY-50, 'playbtnb', startPlayB);
+    btnStartB = game.add.button(posX-400, posY-50, 'playbtnb', startPlayB);
     btnStartB.anchor.setTo(0.5, 0.5);
-    btnStartB.scale.setTo(1.1);*/
+    btnStartB.scale.setTo(1.1);
 
     let posXAbout = game.world.width - SHIP_OFFSET_HOR;
     let posYAbout = game.world.height - SHIP_OFFSET_VER;
@@ -70,9 +73,6 @@ function createInit() {
     *////////////////////////////
 
     posY = game.world.centerY;
-    /*imgUfo = game.add.image(posX, posY, 'ufo');
-    imgUfo.anchor.setTo(0.5, 0.5);
-    imgUfo.scale.setTo(2.0);*/
     soundMenuMusic.play();
     soundMenuMusic.volume = 0.5;
 }
@@ -84,12 +84,17 @@ function updateInit(){
 }
 
 function startPlay() {
-    game.state.start('play');
+    gamestate = 0;
     soundMenuMusic.stop();
+    game.state.start('play');
+    
 }
-/*function startPlayB() {
-    game.state.start('playB');
-}*/
+function startPlayB() {
+    gamestate = 1;
+    soundMenuMusic.stop();
+    game.state.start('play');
+    
+}
 
 function startAbout() {
     game.state.start('about');
