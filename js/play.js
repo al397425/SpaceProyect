@@ -66,18 +66,20 @@ styleIR = {
 
 
 let word = [];
-let wordCh = ['a','b','c','d','e',
-                'f','g','h','i','j','k','l','m',
-                'n','o','o','q','r','s','t','u',
-                'v','w','x','y','z'];
-                
-let wordFan = [ "accompany","example","zenat","banish","withdraw",
-                "negotiation","responsibility","communication",
-                "judicial","qualification","fascinate",
-                "liberty","kitchen","goalkeeper","transform",
-                "orientation","opposition","island","xenoblade",
-                "syndrome","horseshoe","uncertainty", "nationalism",
-                "objective","dressing","misplace","zap"];
+let wordCh = ['a', 'b', 'c', 'd', 'e',
+    'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    'n', 'o', 'o', 'q', 'r', 's', 't', 'u',
+    'v', 'w', 'x', 'y', 'z'
+];
+
+let wordFan = ["accompany", "example", "zenat", "banish", "withdraw",
+    "negotiation", "responsibility", "communication",
+    "judicial", "qualification", "fascinate",
+    "liberty", "kitchen", "goalkeeper", "transform",
+    "orientation", "opposition", "island", "xenoblade",
+    "syndrome", "horseshoe", "uncertainty", "nationalism",
+    "objective", "dressing", "misplace", "zap"
+];
 
 var correct = [];
 
@@ -197,7 +199,6 @@ function createPlay() {
             let enemiesFch;
 
         }
-
         enemiesR = game.add.group();
         enemiesR.enableBody = true;
         wordsR = game.add.group();
@@ -246,7 +247,6 @@ function updateCounter() {
 
 function updateCounterTotal() {
     totaltime++;
-    console.log("totaltime " + totaltime);
 }
 
 function updateCounterCh() {
@@ -276,6 +276,7 @@ function createEnemies(i) {
     textoTemporal[i] = game.add.text(enemy.x + treshold, enemy.y + treshold, textwords[i], styleI);
     words[i] = textoTemporal[i];
 }
+
 function createEnemiesReplicator(i) {
 
     random = Math.floor(Math.random() * 27);
@@ -361,7 +362,6 @@ function moveText() {
     for (var i = 0; i <= currentEnemiesNumFan - 1; i++) {
         if (gamestate == PartB) {
 
-            console.log("/////////" + enemiesF[i]);
             if (enemiesF[i] != undefined && enemiesF[i].body != null) {
 
                 for (var i = 0; i <= currentEnemiesNumFan - 1; i++) {
@@ -378,7 +378,6 @@ function moveText() {
     for (var i = 0; i <= currentEnemiesNumChF - 1; i++) {
         if (gamestate == PartB) {
 
-            console.log("/////////" + enemiesFch[i]);
             if (enemiesFch[i] != undefined && enemiesFch[i].body != null) {
 
                 for (var i = 0; i <= currentEnemiesNumChF - 1; i++) {
@@ -392,43 +391,37 @@ function moveText() {
             }
         }
     }
-
-
 }
 
 function createWaves() {
 
     random = Math.floor(Math.random() * 27);
-    console.log(levelData.WavesData); //waves
     console.log(levelData.WavesData[0]);
     console.log(levelData.WavesData[0].rate); //rate
     console.log(levelData.WavesData[0].speed); //speed
     console.log(levelData.WavesData[0].words[0]); //palabra 0
+    /*
+        for (let i = 0, c = 0, max2, max1 = levelData.WavesData.length; i < max1; i++) {
 
-    for (let i = 0, c = 0, max2, max1 = levelData.WavesData.length; i < max1; i++) {
+            for (c = 0, max2 = levelData.WavesData[i].words.length; c < max2; c++) {
+                word[i] = levelData.WavesData[i].words;
 
-        for (c = 0, max2 = levelData.WavesData[i].words.length; c < max2; c++) {
-            //   console.log("push numero"+ i);
-            word[i] = levelData.WavesData[i].words;
-
+            }
+            if (i > max1) {
+                break;
+            }
         }
-        if (i > max1) {
-            break;
+
+
+        for (let i = 0, max = 4; i <= max; i++) {
+            rates.push(levelData.WavesData[i].rate);
+            if (i = max) {
+                break;
+            }
         }
-    }
 
-
-    for (let i = 0, max = 4; i <= max; i++) {
-        //  console.log(levelData.WavesData[i].rate + "que tiene rates");
-        rates.push(levelData.WavesData[i].rate);
-        //console.log(i + "rate");
-        //console.log(rates[i]);
-        if (i = max) {
-            break;
-        }
-    }
-
-    //levelData.WavesData.forEach(createWave, this);
+        //levelData.WavesData.forEach(createWave, this);
+        */
 }
 
 function createWave(element) {
@@ -451,8 +444,6 @@ function createWave(element) {
 
 /////////////
 
-
-//ESTO EN VERDAD NO GUARDA EL RATE COMO TAL LOL
 function setupRate(rate) {
     actualrate = rate;
 }
@@ -484,9 +475,8 @@ function updatePlay() {
             timerR.start();
             timerR.resume();
             if (numeroIterR <= ENEMIES_GROUP_SIZE_REPLICATOR) {
-                //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
                 if (timeTimerR >= levelData.WavesData[actualWave].rate + 5) {
-                    //console.log("totaltime "+totaltime);
+
                     createEnemiesReplicator(numeroIterR);
 
                     numeroIterR++;
@@ -511,9 +501,7 @@ function updatePlay() {
                 timerch.start();
                 timerch.resume();
                 if (numeroIterch <= ENEMIES_GROUP_SIZE_CHILDREN) {
-                    //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
                     if (timetimerch - 5 >= levelData.WavesData[actualWave].rate + 5) {
-                        //console.log("totaltime "+totaltime);
                         createEnemies(numeroIterch);
                         numeroIterch++;
                         timetimerch = 0
@@ -562,7 +550,6 @@ function updatePlay() {
                 if (numeroIterchF <= ENEMIES_GROUP_SIZE_CHILDREN_FAN) {
 
                     if (timetimerchF >= levelData.WavesData[actualWave].rate + 5) {
-                        //console.log("totaltime "+totaltime);
                         createEnemiesFanCh(numeroIterchF);
                         numeroIterchF++;
                         timetimerchF = 0
@@ -580,10 +567,10 @@ function updatePlay() {
             }
         }
         //if (currentEnemiesNumReplicator == 1) {
-            
+
         //}
     }
-    
+
     ///////////
     //Part B código de arriba
     //////////////////////
@@ -596,59 +583,36 @@ function updatePlay() {
     //Spawn Part A and normal Ufo of the Part B
     ///////////////////////////////////////////
 
-    //console.log(flag+" flag")
     if (currentEnemiesNum < ENEMIES_GROUP_SIZE) {
         timer.start();
         timer.resume();
         if (numeroIter <= ENEMIES_GROUP_SIZE) {
-            //console.log("bucle while, iteracion "+numeroIter+" , totaltime "+totaltime+", actual rate "+levelData.WavesData[actualWave].rate+", es "+(totaltime>= levelData.WavesData[actualWave].rate));
             if (totaltime >= levelData.WavesData[actualWave].rate) {
-                //console.log("totaltime "+totaltime);
                 createEnemies(numeroIter);
                 numeroIter++;
                 totaltime = 0
                 currentEnemiesNum++;
             }
-
-
-
         }
-
-
         if (numeroIter >= ENEMIES_GROUP_SIZE) {
             console.log("pause");
             timer.pause();
-
         }
-
     }
     if (currentEnemiesNum == 0) {
-
         flag = true;
     }
     textI = "Score: " + killcountTotal + "\n Time: " + timeTimer + "\n Wave: " + actualWave + "\n";;
     screenText.setText(textI);
-
     manageCraftMovements();
-
     moveText();
     stars.tilePosition.y += 1;
-    if (currentEnemiesNum == 1) { //colision checker
-        //for(let i = 0;i <= enemies.length;i++){
-        //enemyHitsCraft();
-        //manageColision();
-        //}
-    }
-    //manageCompleteWaves();
     keypressed();
-    //keypressedR();
 }
 
 function manageColision() {
     for (let i = 0; i <= enemies.length; i++) {
-        console.log("////////")
         console.log(enemies[i]);
-        console.log(enemies[0] + " enemy");
         game.physics.arcade.overlap(
             craft, enemies[i], enemyHitsCraft(), null, this);
     }
@@ -658,7 +622,7 @@ function manageColision() {
 function enemyHitsCraft(craft, enemy) {
     if (gamestate == PartB) {
         enemyR.kill();
-        //enemyF.kill();
+        //enemyF.kill();//no borrar
         //enemyFch.kill();
         currentEnemiesNumReplicator = 0;
         currentEnemiesNumFan = 0;
@@ -666,13 +630,12 @@ function enemyHitsCraft(craft, enemy) {
     }
     enemy.kill();
     craft.kill();
-    console.log("Colision");
     CompletedGame = 1;
-    console.log(CompletedGame + "complete game");
     currentEnemiesNum = 0;
     stageMusic.stop();
     game.state.start('gameOver');
 }
+
 function createkeyboard() {
     AButton = game.input.keyboard.addKey(
         Phaser.Keyboard.A);
@@ -729,220 +692,161 @@ function createkeyboard() {
 }
 
 function keypressed() {
-    if (AButton.justDown){
+    if (AButton.justDown) {
         manageWords('a');
         manageWordsR('a');
         manageWordsF('a');
         manageWordsFCh('a');
     }
-    if (BButton.justDown){
+    if (BButton.justDown) {
         manageWords('b');
         manageWordsR('b');
         manageWordsF('b');
         manageWordsFCh('b');
     }
-    if (CButton.justDown){
+    if (CButton.justDown) {
         manageWords('c');
         manageWordsR('c');
         manageWordsF('c');
         manageWordsFCh('c');
     }
-    if (DButton.justDown){}
-        manageWords('d');
-        manageWordsR('d');
-        manageWordsF('d');
-        manageWordsFCh('d');
-    if (EButton.justDown){
+    if (DButton.justDown) {}
+    manageWords('d');
+    manageWordsR('d');
+    manageWordsF('d');
+    manageWordsFCh('d');
+    if (EButton.justDown) {
         manageWords('e');
         manageWordsR('e');
         manageWordsF('e');
         manageWordsFCh('e');
     }
-    if (FButton.justDown){
+    if (FButton.justDown) {
         manageWords('f');
         manageWordsR('f');
         manageWordsF('f');
         manageWordsFCh('f');
     }
-    if (GButton.justDown){
+    if (GButton.justDown) {
         manageWords('g');
         manageWordsR('g');
         manageWordsF('g');
         manageWordsFCh('g');
     }
-    if (HButton.justDown){
+    if (HButton.justDown) {
         manageWords('h');
         manageWordsR('h');
         manageWordsF('h');
         manageWordsFCh('h');
     }
-    if (IButton.justDown){
+    if (IButton.justDown) {
         manageWords('i');
         manageWordsR('i');
         manageWordsF('i');
         manageWordsFCh('i');
     }
-    if (JButton.justDown){
+    if (JButton.justDown) {
         manageWords('j');
         manageWordsR('j');
         manageWordsF('j');
         manageWordsFCh('j');
     }
-    if (KButton.justDown){
+    if (KButton.justDown) {
         manageWords('k');
         manageWordsR('k');
         manageWordsF('k');
         manageWordsFCh('k');
     }
-    if (LButton.justDown){
+    if (LButton.justDown) {
         manageWords('l');
         manageWordsR('l');
         manageWordsF('l');
         manageWordsFCh('l');
     }
-    if (MButton.justDown){
+    if (MButton.justDown) {
         manageWords('m');
         manageWordsR('m');
         manageWordsF('m');
         manageWordsFCh('m');
     }
-    if (NButton.justDown){
+    if (NButton.justDown) {
         manageWords('n');
         manageWordsR('n');
         manageWordsF('n');
         manageWordsFCh('n');
     }
-    if (OButton.justDown){
+    if (OButton.justDown) {
         manageWords('o');
         manageWordsR('o');
         manageWordsF('o');
         manageWordsFCh('o');
     }
-    if (PButton.justDown){
+    if (PButton.justDown) {
         manageWords('p');
         manageWordsR('p');
         manageWordsF('p');
         manageWordsFCh('p');
     }
-    if (QButton.justDown){
+    if (QButton.justDown) {
         manageWords('q');
         manageWordsR('q');
         manageWordsF('q');
         manageWordsFCh('q');
     }
-    if (RButton.justDown){
+    if (RButton.justDown) {
         manageWords('r');
         manageWordsR('r');
         manageWordsF('r');
         manageWordsFCh('r');
     }
-    if (SButton.justDown){
+    if (SButton.justDown) {
         manageWords('s');
         manageWordsR('s');
         manageWordsF('s');
         manageWordsFCh('s');
     }
-    if (TButton.justDown){
+    if (TButton.justDown) {
         manageWords('t');
         manageWordsR('t');
         manageWordsF('t');
         manageWordsFCh('t');
     }
-    if (UButton.justDown){
+    if (UButton.justDown) {
         manageWords('u');
         manageWordsR('u');
         manageWordsF('u');
         manageWordsFCh('u');
     }
-    if (VButton.justDown){
+    if (VButton.justDown) {
         manageWords('v');
         manageWordsR('v');
         manageWordsF('v');
         manageWordsFCh('v');
     }
-    if (WButton.justDown){
+    if (WButton.justDown) {
         manageWords('w');
         manageWordsR('w');
         manageWordsF('w');
         manageWordsFCh('w');
     }
-    if (XButton.justDown){
+    if (XButton.justDown) {
         manageWords('x');
         manageWordsR('x');
         manageWordsF('x');
         manageWordsFCh('x');
     }
-    if (YButton.justDown){
+    if (YButton.justDown) {
         manageWords('y');
         manageWordsR('y');
         manageWordsF('y');
         manageWordsFCh('y');
     }
-    if (ZButton.justDown){
+    if (ZButton.justDown) {
         manageWords('z');
         manageWordsR('z');
         manageWordsF('z');
         manageWordsFCh('z');
     }
-}
-
-function keypressedR() {
-    ///////Part B////////
-    /////////////////////
-
-    if (AButton.justDown)
-        manageWordsR('a');
-    if (BButton.justDown)
-        manageWordsR('b');
-    if (CButton.justDown)
-        manageWordsR('c');
-    if (DButton.justDown)
-        manageWordsR('d');
-    if (EButton.justDown)
-        manageWordsR('e');
-    if (FButton.justDown)
-        manageWordsR('f');
-    if (GButton.justDown)
-        manageWordsR('g');
-    if (HButton.justDown)
-        manageWordsR('h');
-    if (IButton.justDown)
-        manageWordsR('i');
-    if (JButton.justDown)
-        manageWordsR('j');
-    if (KButton.justDown)
-        manageWordsR('k');
-    if (LButton.justDown)
-        manageWordsR('l');
-    if (MButton.justDown)
-        manageWordsR('m');
-    if (NButton.justDown)
-        manageWordsR('n');
-    if (OButton.justDown)
-        manageWordsR('o');
-    if (PButton.justDown)
-        manageWordsR('p');
-    if (QButton.justDown)
-        manageWordsR('q');
-    if (RButton.justDown)
-        manageWordsR('r');
-    if (SButton.justDown)
-        manageWordsR('s');
-    if (TButton.justDown)
-        manageWordsR('t');
-    if (UButton.justDown)
-        manageWordsR('u');
-    if (VButton.justDown)
-        manageWords('v');
-    if (WButton.justDown)
-        manageWordsR('w');
-    if (XButton.justDown)
-        manageWordsR('x');
-    if (YButton.justDown)
-        manageWordsR('y');
-    if (ZButton.justDown)
-        manageWordsR('z');
-
 }
 
 function manageCraftMovements() {
@@ -959,11 +863,7 @@ function manageWords(char) {
 
     chartotal++;
 
-    //  Loop through each letter of the word being entered and check them against the key that was pressed
-    //He cambiado el length del for que era incorecto
     for (var i = 0; i < textoTemporal.length; i++) {
-        //var letter = chword.charAt(i);
-        //  If they pressed one of the letters in the word, flag it as correct
 
         if (lockedWord == i) {
             if (char == textoTemporal[i].text.substring(0, 1)) {
@@ -971,7 +871,6 @@ function manageWords(char) {
                 let largo = textoTemporal[i].text.length;
                 textoTemporal[i].text = textoTemporal[i].text.substring(1, largo);
 
-                //console.log(textoTemporal[i].text+" substring de 1 a lenght"+largo);
                 if (textoTemporal[i].text.length == 0) {
                     textoTemporal.slice(0, 1).concat(textoTemporal.slice(1 + 1));
                     console.log("KILL " + textoTemporal[i].text + " i era " + i);
@@ -1020,20 +919,11 @@ function manageWords(char) {
             }
         } else if (lockedWord == -1) {
 
-            if (textoTemporal[i] == undefined && killcount > 0) {
-                //console.log(textoTemporal[i] + " [i] = " + i + "; se ha matado " + killcount);
 
-                //textoTemporal[i] =textoTemporal[i+1];
-            }
-
-            if (char == textoTemporal[i].text.substring(0, 1))
-            //if (char == words[i].text.substring(0,1))
-            {
+            if (char == textoTemporal[i].text.substring(0, 1)) {
                 lockedWord = i;
                 let largo = textoTemporal[i].text.length;
                 textoTemporal[i].text = textoTemporal[i].text.substring(1, largo);
-
-                //console.log(textoTemporal[i].text + " substring de 1 a lenght" + largo);
             }
         }
 
@@ -1041,22 +931,14 @@ function manageWords(char) {
 }
 
 function manageWordsR(char) {
-
     chartotal++;
-
-    //  Loop through each letter of the word being entered and check them against the key that was pressed
-    //He cambiado el length del for que era incorecto
     for (var i = 0; i < textoTemporalR.length; i++) {
-        //var letter = chword.charAt(i);
-        //  If they pressed one of the letters in the word, flag it as correct
 
         if (lockedWord == i) {
             if (char == textoTemporalR[i].text.substring(0, 1)) {
                 chartyped++;
                 let largoR = textoTemporalR[i].text.length;
                 textoTemporalR[i].text = textoTemporalR[i].text.substring(1, largoR);
-
-                //console.log(textoTemporal[i].text+" substring de 1 a lenght"+largo);
                 if (textoTemporalR[i].text.length == 0) {
                     textoTemporalR.slice(0, 1).concat(textoTemporalR.slice(1 + 1));
                     console.log("KILL " + textoTemporalR[i].text + " i era " + i);
@@ -1105,20 +987,11 @@ function manageWordsR(char) {
             }
         } else if (lockedWord == -1) {
 
-            if (textoTemporalR[i] == undefined && killcount > 0) {
-                //console.log(textoTemporalR[i] + " [i] = " + i + "; se ha matado " + killcount);
 
-                //textoTemporal[i] =textoTemporal[i+1];
-            }
-
-            if (char == textoTemporalR[i].text.substring(0, 1))
-            //if (char == wordsR[i].text.substring(0,1))
-            {
+            if (char == textoTemporalR[i].text.substring(0, 1)) {
                 lockedWord = i;
                 let largoR = textoTemporalR[i].text.length;
                 textoTemporalR[i].text = textoTemporalR[i].text.substring(1, largoR);
-
-                //console.log(textoTemporalR[i].text + " substring de 1 a lenght" + largoR);
             }
         }
 
@@ -1126,60 +999,39 @@ function manageWordsR(char) {
 }
 
 function manageWordsF(char) {
-
     chartotal++;
-
-    //  Loop through each letter of the word being entered and check them against the key that was pressed
-    //He cambiado el length del for que era incorecto
     for (var i = 0; i < textoTemporalF.length; i++) {
-        //var letter = chword.charAt(i);
-        //  If they pressed one of the letters in the word, flag it as correct
-
         if (lockedWord == i) {
             if (char == textoTemporalF[i].text.substring(0, 1)) {
                 chartyped++;
                 let largoF = textoTemporalF[i].text.length;
                 textoTemporalF[i].text = textoTemporalF[i].text.substring(1, largoF);
-
-                //console.log(textoTemporal[i].text+" substring de 1 a lenght"+largo);
                 if (textoTemporalF[i].text.length == 0) {
                     textoTemporalF.slice(0, 1).concat(textoTemporalF.slice(1 + 1));
-                    console.log("KILL " + textoTemporalR[i].text + " i era " + i);
                     lockedWord = -1;
                     currentEnemiesNumFan--;
                     killcount++;
                     killcountTotal++;
-                    /*if (enemiesR.length == 0)
-                        enemyIsCreatedR = false;*/
-                        
                     numeroIterF--;
                     enemiesF[i].kill();
                     //si i es 0 todas necesitan irse a la izq (words[i]=words[i+1]). si era la ultima no se hace nada. 
                     //si era intermedia las de antes de ese i no se tocan pero a partor de ahí es como si fuese el 0
                     if (currentEnemiesNumFan > 1) {
                         if (i == 0) {
-                            console.log("era la palabra 0, lenght es " + currentEnemiesNumFan);
                             for (var j = 0; j <= currentEnemiesNumFan - 1; j++) {
-
-                                console.log("palabra [" + j + "] " + wordsF[j].text + " pasa a ser " + wordsR[j + 1].text);
                                 wordsF[j].text = wordsF[j + 1].text;
                                 enemiesF[j] = enemiesF[j + 1];
-                                console.log("ahora palabra " + j + " es " + wordsF[j].text);
-
                             }
                         } else if (i != currentEnemiesNumFan) {
                             for (var j = i; j < currentEnemiesNumFan; j++) {
-                                console.log("palabra [" + j + "] " + wordsF[j].text + " pasa a ser " + wordsR[j + 1].text);
                                 wordsF[j].text = wordsF[j + 1].text;
                                 enemiesF[j] = enemiesF[j + 1];
                             }
                         }
-
                         wordsR[currentEnemiesNumFan].text = "";
                     } else {
                         if (i == 0) {
                             console.log("ELSE SOLO QUEDA 1");
-                            //enemyIsCreatedR = false; //colision checker
                             if (wordsF[1] != undefined) {
                                 wordsF[0].text = wordsF[1].text;
                                 wordsF[1].text = "";
@@ -1187,87 +1039,53 @@ function manageWordsF(char) {
                             }
                         }
                     }
-
                 }
-
             }
         } else if (lockedWord == -1) {
 
-            if (textoTemporalF[i] == undefined && killcount > 0) {
-                //console.log(textoTemporalF[i] + " [i] = " + i + "; se ha matado " + killcount);
-
-                //textoTemporal[i] =textoTemporal[i+1];
-            }
-
-            if (char == textoTemporalF[i].text.substring(0, 1))
-            //if (char == wordsR[i].text.substring(0,1))
-            {
+            if (char == textoTemporalF[i].text.substring(0, 1)) {
                 lockedWord = i;
                 let largoF = textoTemporalF[i].text.length;
                 textoTemporalF[i].text = textoTemporalF[i].text.substring(1, largoF);
-
-                //console.log(textoTemporalR[i].text + " substring de 1 a lenght" + largoF);
             }
         }
-
     }
 }
 
 function manageWordsFCh(char) {
-
     chartotal++;
-
-    //  Loop through each letter of the word being entered and check them against the key that was pressed
-    //He cambiado el length del for que era incorecto
     for (var i = 0; i < textoTemporalFch.length; i++) {
-        //var letter = chword.charAt(i);
-        //  If they pressed one of the letters in the word, flag it as correct
-
         if (lockedWord == i) {
             if (char == textoTemporalFch[i].text.substring(0, 1)) {
                 chartyped++;
                 let largoFch = textoTemporalFch[i].text.length;
                 textoTemporalFch[i].text = textoTemporalFch[i].text.substring(1, largoFch);
-
-                //console.log(textoTemporal[i].text+" substring de 1 a lenght"+largo);
                 if (textoTemporalFch[i].text.length == 0) {
                     textoTemporalFch.slice(0, 1).concat(textoTemporalFch.slice(1 + 1));
-                    console.log("KILL " + textoTemporalFch[i].text + " i era " + i);
                     lockedWord = -1;
                     currentEnemiesNumChF--;
                     killcount++;
                     killcountTotal++;
-                    /*if (enemiesR.length == 0)
-                        enemyIsCreatedR = false;*/
-                        
                     numeroIterchF--;
                     enemiesFch[i].kill();
                     //si i es 0 todas necesitan irse a la izq (words[i]=words[i+1]). si era la ultima no se hace nada. 
                     //si era intermedia las de antes de ese i no se tocan pero a partor de ahí es como si fuese el 0
                     if (currentEnemiesNumChF > 1) {
                         if (i == 0) {
-                            //console.log("era la palabra 0, lenght es " + currentEnemiesNumChF);
                             for (var j = 0; j <= currentEnemiesNumChF - 1; j++) {
-
-                                //console.log("palabra [" + j + "] " + wordsFch[j].text + " pasa a ser " + wordsR[j + 1].text);
                                 wordsFch[j].text = wordsFch[j + 1].text;
                                 enemiesFch[j] = enemiesFch[j + 1];
-                                //console.log("ahora palabra " + j + " es " + wordsFch[j].text);
-
                             }
                         } else if (i != currentEnemiesNumChF) {
                             for (var j = i; j < currentEnemiesNumChF; j++) {
-                                //console.log("palabra [" + j + "] " + wordsR[j].text + " pasa a ser " + wordsR[j + 1].text);
                                 wordFch[j].text = wordsFch[j + 1].text;
                                 enemiesFch[j] = enemiesFch[j + 1];
                             }
                         }
-
                         wordsFch[currentEnemiesNumChF].text = "";
                     } else {
                         if (i == 0) {
                             console.log("ELSE SOLO QUEDA 1");
-                            //enemyIsCreatedR = false; //colision checker
                             if (wordsFch[1] != undefined) {
                                 wordsFch[0].text = wordsFch[1].text;
                                 wordsFch[1].text = "";
@@ -1280,21 +1098,10 @@ function manageWordsFCh(char) {
 
             }
         } else if (lockedWord == -1) {
-
-            if (textoTemporalFch[i] == undefined && killcount > 0) {
-                //console.log(textoTemporalFch[i] + " [i] = " + i + "; se ha matado " + killcount);
-
-                //textoTemporal[i] =textoTemporal[i+1];
-            }
-
-            if (char == textoTemporalFch[i].text.substring(0, 1))
-            //if (char == wordsR[i].text.substring(0,1))
-            {
+            if (char == textoTemporalFch[i].text.substring(0, 1)) {
                 lockedWord = i;
                 let largoFch = textoTemporalFch[i].text.length;
                 textoTemporalFch[i].text = textoTemporalFch[i].text.substring(1, largoFch);
-
-                //console.log(textoTemporalFch[i].text + " substring de 1 a lenght" + largoFch);
             }
         }
 
@@ -1343,7 +1150,7 @@ function resetMember(item) {
 }
 
 function manageUpdateWave() {
-    if (killcount > 2 /*word[w1].length*/ ) {
+    if (killcount > 2 /*word[w1].length*/ ) { //Cambiar esto antes de entregar
         killcount = 0
         w2 = 0;
         console.log("--->NEXTWAVE<---");
@@ -1375,6 +1182,3 @@ function nextWave() {
 
     }
 }
-/////////////////////////////////////////////////////////////////
-//////////////////////////PART B////////////////////////////////
-////////////////////////////////////////////////////////////////
