@@ -40,8 +40,6 @@ let killcountTotal = 0;
 let treshold = 15;
 let chartyped; //gameover screen
 let chartotal; //gameover screen
-let enemyIsCreated = false; //colision checker
-let enemyIsCreatedR = false; //colision checker
 let PartA = 0;
 let PartB = 1;
 let CompletedGame = 0;
@@ -228,7 +226,6 @@ function createEnemies(i) {
     console.log("texto temporal[" + i + "] es " + textoTemporal[i].text);
     console.log("words 0 es " + words[0]);
     words[i] = textoTemporal[i];
-    enemyIsCreated = true; //colision checker
 
     console.log("words[" + i + "] es " + words[i].text);
     //}
@@ -259,7 +256,6 @@ function createEnemiesReplicator(i) {
     console.log("texto temporal[" + i + "] es " + textoTemporalR[i].text);
     console.log("words 0 es " + words[0]);
     wordsR[i] = textoTemporalR[i];
-    enemyIsCreatedR = true; //colision checker
     console.log("words[" + i + "] es " + wordsR[i].text);
     //}
 
@@ -788,8 +784,6 @@ function manageWords(char) {
                     killcount++;
                     killcountTotal++;
                     soundLaser.play();
-                    if (enemies.length == 0)
-                        enemyIsCreated = false;
                     numeroIter--;
                     enemies[i].kill();
                     //si i es 0 todas necesitan irse a la izq (words[i]=words[i+1]). si era la ultima no se hace nada. 
@@ -817,7 +811,6 @@ function manageWords(char) {
                     } else {
                         if (i == 0) {
                             console.log("ELSE SOLO QUEDA 1");
-                            enemyIsCreated = false; //colision checker
                             if (words[1] != undefined) {
                                 words[0].text = words[1].text;
                                 words[1].text = "";
@@ -875,8 +868,6 @@ function manageWordsR(char) {
                     currentEnemiesNumReplicator--;
                     killcount++;
                     killcountTotal++;
-                    if (enemiesR.length == 0)
-                        enemyIsCreatedR = false;
                     numeroIterR--;
                     enemiesR[i].kill();
                     //si i es 0 todas necesitan irse a la izq (words[i]=words[i+1]). si era la ultima no se hace nada. 
@@ -904,7 +895,6 @@ function manageWordsR(char) {
                     } else {
                         if (i == 0) {
                             console.log("ELSE SOLO QUEDA 1");
-                            enemyIsCreatedR = false; //colision checker
                             if (wordsR[1] != undefined) {
                                 wordsR[0].text = wordsR[1].text;
                                 wordsR[1].text = "";
