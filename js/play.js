@@ -400,7 +400,7 @@ function createWaves() {
     console.log(levelData.WavesData[0].rate); //rate
     console.log(levelData.WavesData[0].speed); //speed
     console.log(levelData.WavesData[0].words[0]); //palabra 0
-    /*
+    
         for (let i = 0, c = 0, max2, max1 = levelData.WavesData.length; i < max1; i++) {
 
             for (c = 0, max2 = levelData.WavesData[i].words.length; c < max2; c++) {
@@ -421,7 +421,7 @@ function createWaves() {
         }
 
         //levelData.WavesData.forEach(createWave, this);
-        */
+        
 }
 
 function createWave(element) {
@@ -946,6 +946,7 @@ function manageWordsR(char) {
                     currentEnemiesNumReplicator--;
                     killcount++;
                     killcountTotal++;
+                    soundLaser.play();
                     numeroIterR--;
                     enemiesR[i].kill();
                     //si i es 0 todas necesitan irse a la izq (words[i]=words[i+1]). si era la ultima no se hace nada. 
@@ -1012,6 +1013,7 @@ function manageWordsF(char) {
                     currentEnemiesNumFan--;
                     killcount++;
                     killcountTotal++;
+                    soundLaser.play();
                     numeroIterF--;
                     enemiesF[i].kill();
                     //si i es 0 todas necesitan irse a la izq (words[i]=words[i+1]). si era la ultima no se hace nada. 
@@ -1066,6 +1068,7 @@ function manageWordsFCh(char) {
                     currentEnemiesNumChF--;
                     killcount++;
                     killcountTotal++;
+                    soundLaser.play();
                     numeroIterchF--;
                     enemiesFch[i].kill();
                     //si i es 0 todas necesitan irse a la izq (words[i]=words[i+1]). si era la ultima no se hace nada. 
@@ -1150,7 +1153,7 @@ function resetMember(item) {
 }
 
 function manageUpdateWave() {
-    if (killcount > 2 /*word[w1].length*/ ) { //Cambiar esto antes de entregar
+    if (killcount > 4 /*word[w1].length*/ ) { //Cambiar esto antes de entregar
         killcount = 0
         w2 = 0;
         console.log("--->NEXTWAVE<---");
